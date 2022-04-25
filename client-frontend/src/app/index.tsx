@@ -8,6 +8,8 @@ import { LeftNavigationBar } from 'features/navigation/ui/bars/left';
 import { useAuth } from 'shared/api/session';
 import { User } from 'shared/api';
 import ProfileSetupPage from 'pages/ProfileSetup';
+import { CircularProgress } from '@mui/material';
+import { Box } from '@mui/system';
 
 const Routes = () => {
   let routes = useRoutes([
@@ -41,15 +43,23 @@ function LoggedPage(props: { user: User | undefined }) {
 }
 
 function AppWrapper() {
-  const { user, logged } = useAuth()
-  return (
-    <div className="App">
-      {!logged
-        ? <LoginPage />
-        : <LoggedPage user={user} />
-      }
-    </div>
-  );
+  const { user, loading, logged } = useAuth()
+  if(loading){
+    return (
+      <Box className="center-of-screen">
+        <CircularProgress size={"100px"} />
+      </Box>
+    )
+  }else{
+    return (
+      <>
+        {!logged
+          ? <LoginPage />
+          : <LoggedPage user={user} />
+        }
+      </>
+    )
+  }
 }
 
 export default AppWrapper;
