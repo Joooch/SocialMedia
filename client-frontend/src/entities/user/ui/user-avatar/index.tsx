@@ -5,11 +5,11 @@ import type { User } from 'shared/api/types';
 const defaultUserImg = "/img/user.png"
 
 export const UserAvatar = (props: { user?: User, src?: string, size?: number | string }) => {
-    const [imageSrc, setImageSrc] = useState<string>(props.src ?? defaultUserImg);
+    const [imageSrc, setImageSrc] = useState<string>();
 
     useMemo(() => {
-        setImageSrc(props.src ?? defaultUserImg)
-    }, [props.src])
+        setImageSrc(props.src || "/img/users/" + props.user?.userId + ".webp" || defaultUserImg)
+    }, [props.src, props.user?.userId])
 
     return (
         <img
