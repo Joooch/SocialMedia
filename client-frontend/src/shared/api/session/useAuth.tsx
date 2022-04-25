@@ -34,7 +34,7 @@ export function AuthProvider({
     const [loading, setLoading] = useState<boolean>(false);
 
     const [cookies, setCookie, removeCookie] = useCookies(["Token"]);
-    useEffect(login, []);
+    useEffect(login, [cookies.Token]);
 
     function login(token?: string) {
         let jwtToken = token ?? cookies.Token;
