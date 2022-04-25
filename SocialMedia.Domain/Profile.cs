@@ -16,7 +16,5 @@ namespace SocialMedia.Domain
         [Required]
         public string LastName { get; set; }
 
-        public string? Avatar { get; set; }
-
     }
 }
