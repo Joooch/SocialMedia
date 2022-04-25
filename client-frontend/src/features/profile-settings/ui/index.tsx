@@ -1,13 +1,11 @@
-import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { useMemo, useState } from "react";
+import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
+import React, { useMemo, useState } from "react";
 import { Box, Button, Grid, Stack } from '@mui/material';
-import React from 'react';
 import { UserAvatar } from 'entities/user';
 import SendIcon from '@mui/icons-material/Send';
 import { profileUpdate, ProfileUpdateDto, profileUpdateImage } from 'shared/api/profile'
+import { CircularProgress, TextField } from '@mui/material';
 
 type FormErrors = {
     firstName?: boolean,
@@ -17,6 +15,8 @@ type FormErrors = {
     city?: boolean,
     zipCode?: boolean,
     county?: boolean,
+
+    [x: string]: boolean | undefined
 }
 type ValidateProps = {
     date?: Date | null,
@@ -37,7 +37,7 @@ const isStringInvalid = (value: string | undefined, minLength: number, maxLength
     return len < minLength || len > maxLength
 }
 
-const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => void): boolean => {
+const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => void, assertNull?: boolean): boolean => {
     const errors: FormErrors = {
         firstName: isStringInvalid(props.firstName, 5, 50),
         lastName: isStringInvalid(props.lastName, 5, 50),
@@ -45,6 +45,14 @@ const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => 
         city: isStringInvalid(props.city, 5, 30),
         region: isStringInvalid(props.region, 2, 50),
         county: isStringInvalid(props.county, 2, 20),
+    }
+    if (assertNull) {
+        for (const key in errors) {
+            const error = errors[key];
+            if (error === null || error === undefined) {
+                errors[key] = true
+            }
+        }
     }
     if (setErrors) {
         setErrors(errors);
@@ -74,6 +82,7 @@ export default function ProfileSettings(props: { profileImage?: string }) {
     const [country, setCountry] = useState<string>("");
     const [profileImage, setProfileImage] = useState<string | undefined>(_profileImage);
 
+    const [uploading, setUploading] = useState<boolean>(false);
 
     const [errors, setErrors] = useState<FormErrors>();
     const fileInput = React.useRef<HTMLInputElement>(null);
@@ -104,12 +113,21 @@ export default function ProfileSettings(props: { profileImage?: string }) {
             console.log('date == null')
             return
         }
+        const isValid = validateForm({ date, firstName, lastName, address, city, region: region, county: country }, setErrors, true);
+        if (!isValid) {
+            return;
+        }
 
         const dto: ProfileUpdateDto = {
             firstName: firstName, lastName, address, city, region, country, date
         }
 
-        profileUpdate(dto)
+        setUploading(true)
+        profileUpdate(dto).finally(() => {
+            setTimeout(() => {
+                setUploading(false)
+            }, 1000);
+        })
     }
 
     return (
@@ -242,6 +260,7 @@ export default function ProfileSettings(props: { profileImage?: string }) {
                     <Button variant="contained" color="success" size="large" startIcon={<SendIcon />} onClick={() => uploadChanges()}>
                         Submit
                     </Button>
+                    {uploading ? <CircularProgress sx={{ ml: 24, position: "absolute" }} /> : undefined}
                 </Grid>
             </Grid>
         </Box >
