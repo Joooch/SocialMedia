@@ -13,6 +13,7 @@ import { Box } from '@mui/system';
 const Routes = () => {
   let routes = useRoutes([
     { path: "/", element: <HomePage /> },
+    { path: "/settings", element: <ProfileSetupPage /> },
     //{ path: "/login", element: <Login /> },
   ])
   return routes;
