@@ -1,27 +1,32 @@
 import { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogin } from 'react-google-login';
 import { useAuth } from 'shared/api/session';
+import Button from '@mui/material/Button'
+import { Box, Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add'
 export const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID!;
 
 
 const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline, login: (token: string) => void) => {
     if ("tokenId" in response) {
         let token = response.tokenId
-        login( token )
+        login(token)
     }
 }
 
 function LoginPage() {
     const { loginGoogle } = useAuth();
     return (
-        <div className="Login">
-            <h1 className='center'>Title of Login page</h1>
-            <GoogleLogin
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Login"
-                onSuccess={res => responseGoogle(res, loginGoogle)}
-                onFailure={res => responseGoogle(res, loginGoogle)}
-                cookiePolicy={'single_host_origin'}
-            />
+        <div className='center-of-screen'>
+            <Box sx={{ maxWidth: "md" }} className="center-text">
+                <h1 className='center'>Login Page</h1>
+                <GoogleLogin
+                    clientId={GOOGLE_CLIENT_ID}
+                    buttonText="Login by Google"
+                    onSuccess={res => responseGoogle(res, loginGoogle)}
+                    onFailure={res => responseGoogle(res, loginGoogle)}
+                    cookiePolicy={'single_host_origin'}
+                />
+            </Box>
         </div>
     );
 }
