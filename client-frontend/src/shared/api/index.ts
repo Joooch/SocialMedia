@@ -1,2 +1,3 @@
 export * from './types'
-export * from './session/lib'
+export * from './session'
+export * from './profile'

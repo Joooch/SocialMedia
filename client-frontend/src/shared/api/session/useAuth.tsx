@@ -12,6 +12,7 @@ import axios from "axios";
 
 interface AuthContextType {
     user?: User;
+    loading?: boolean;
     login: (token?: string) => void;
     loginGoogle: (token: string) => void;
     logged: string | boolean; // email
@@ -28,12 +29,14 @@ export function AuthProvider({
 }): JSX.Element {
     const [user, setUser] = useState<User>();
     const [logged, setLogged] = useState<string | boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(login, []);
 
     function login(token?: string) {
         let jwtToken = token ?? getCookie("Token");
         if (jwtToken) {
+            setLoading(true)
             axios.defaults.headers.common['Authorization'] = jwtToken;
 
             getCurrentUser()
@@ -44,9 +47,11 @@ export function AuthProvider({
                     }
                     setLogged(res.email);
                     setUser(res.user);
+                    setLoading(false)
                 })
                 .catch((_error) => { });
         } else {
+            setLoading(false)
             console.log("null token");
         }
     }
@@ -63,8 +68,9 @@ export function AuthProvider({
             login,
             loginGoogle,
             logged,
+            loading
         }),
-        [user, logged]
+        [user, logged, loading]
     );
 
     return (

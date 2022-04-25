@@ -6,6 +6,8 @@ import { useMemo, useState } from "react";
 import { Box, Button, Grid, Stack } from '@mui/material';
 import React from 'react';
 import { UserAvatar } from 'entities/user';
+import SendIcon from '@mui/icons-material/Send';
+import { profileUpdate, ProfileUpdateDto, profileUpdateImage } from 'shared/api/profile'
 
 type FormErrors = {
     firstName?: boolean,
@@ -58,7 +60,7 @@ const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => 
 }
 
 export default function ProfileSettings(props: { profileImage?: string }) {
-    let _profileImage = props.profileImage ?? "/img/user.png"
+    let _profileImage = props.profileImage
 
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 15);
@@ -69,37 +71,45 @@ export default function ProfileSettings(props: { profileImage?: string }) {
     const [address, setAddress] = useState<string>("");
     const [city, setCity] = useState<string>("");
     const [region, setRegion] = useState<string>("");
-    const [county, setCounty] = useState<string>("");
-    const [profileImage, setProfileImage] = useState<string>(_profileImage);
+    const [country, setCountry] = useState<string>("");
+    const [profileImage, setProfileImage] = useState<string | undefined>(_profileImage);
 
 
     const [errors, setErrors] = useState<FormErrors>();
     const fileInput = React.useRef<HTMLInputElement>(null);
 
     useMemo(() => {
-        const isValid = validateForm({ date, firstName, lastName, address, city, region: region, county }, setErrors)
-        console.log({ isValid })
-    }, [date, firstName, lastName, address, city, region, county])
+        validateForm({ date, firstName, lastName, address, city, region: region, county: country }, setErrors)
+    }, [date, firstName, lastName, address, city, region, country])
 
     const doUploadFile = () => {
-        console.log({ fileInput })
         fileInput?.current?.click();
     }
     const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("on image change")
         const files = event.target.files;
-        if (!files) {
-            console.log("! files")
+        if (!files || files.length === 0) {
             return;
         }
+
         const image = files[0];
-        setProfileImage(URL.createObjectURL(image))
-        console.log(profileImage)
+        //setProfileImage(URL.createObjectURL(image));
+
+        profileUpdateImage(image).then(res => {
+            setProfileImage(res.data.filename + "?" + new Date().getTime())
+        })
     }
 
-    const upload = () => {
-        let isImageChangd = _profileImage !== profileImage;
-        
+    const uploadChanges = () => {
+        if (date == null) {
+            console.log('date == null')
+            return
+        }
+
+        const dto: ProfileUpdateDto = {
+            firstName: firstName, lastName, address, city, region, country, date
+        }
+
+        profileUpdate(dto)
     }
 
     return (
@@ -173,7 +183,7 @@ export default function ProfileSettings(props: { profileImage?: string }) {
                         />
                     </LocalizationProvider>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         required
                         id="address"
@@ -185,6 +195,20 @@ export default function ProfileSettings(props: { profileImage?: string }) {
                         value={address}
                         error={errors?.address}
                         onChange={x => setAddress(x.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="country"
+                        name="country"
+                        label="Country"
+                        fullWidth
+                        autoComplete="shipping country"
+                        variant="outlined"
+                        value={country}
+                        error={errors?.county}
+                        onChange={x => setCountry(x.target.value)}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -214,21 +238,12 @@ export default function ProfileSettings(props: { profileImage?: string }) {
                         onChange={x => setRegion(x.target.value)}
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="country"
-                        name="country"
-                        label="Country"
-                        fullWidth
-                        autoComplete="shipping country"
-                        variant="outlined"
-                        value={county}
-                        error={errors?.county}
-                        onChange={x => setCounty(x.target.value)}
-                    />
+                <Grid item xs={12} className="center-content">
+                    <Button variant="contained" color="success" size="large" startIcon={<SendIcon />} onClick={() => uploadChanges()}>
+                        Submit
+                    </Button>
                 </Grid>
             </Grid>
-        </Box>
+        </Box >
     )
 }

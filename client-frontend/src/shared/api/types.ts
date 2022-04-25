@@ -1,16 +1,9 @@
-export type User = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-}
-
-/* export type Profile = {
+export type User = { // aka Profile
     userId: string;
     firstName: string;
-    secondName: string;
-    avatar: string;
-} */
+    lastName: string;
+    
+}
 
 export type Post = {
     id: string;
