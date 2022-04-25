@@ -1,5 +1,4 @@
 import ProfileSettings from 'features/profile-settings/ui';
-import { useState } from 'react';
 
 function ProfileSetupPage() {
     return (
