@@ -25,7 +25,7 @@ namespace SocialMedia.API.Controllers
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> Update(ProfileUpdateDto profileDto)
+        public async Task<ProfileDto> Update(ProfileUpdateDto profileDto)
         {
             var user = await _userRepository.GetByEmail(HttpContext.User.Identity!.Name!);
             if (user == null)
@@ -36,15 +36,26 @@ namespace SocialMedia.API.Controllers
             var profile = await _profileRepository.GetByUser(user);
             if (profile == null)
             {
-                var newProfile = _mapper.Map<Domain.Profile>(profileDto);
-                _profileRepository.Add(newProfile);
+                profile = _mapper.Map<Domain.Profile>(profileDto);
+                _profileRepository.Add(profile);
+                await _profileRepository.SaveAsync();
+            }
+            else
+            {
+                profile.FirstName = profileDto.FirstName;
+                profile.LastName = profileDto.LastName;
+                profile.Address = profileDto.Address;
+                profile.City = profileDto.City;
+                profile.Region = profileDto.Region;
+                profile.Country = profileDto.Country;
+
                 await _profileRepository.SaveAsync();
             }
 
             //var profile = _mapper.Map<Profile>(profileDto);
             //_profileRepository.Remove()
             //_profileRepository.Add()
-            return Ok();
+            return _mapper.Map<ProfileDto>(profile);
         }
 
         [HttpPut("image")]
