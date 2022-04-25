@@ -15,7 +15,7 @@ interface AuthContextType {
     loading?: boolean;
     login: (token?: string) => void;
     loginGoogle: (token: string) => void;
-    logged: string | boolean; // email
+    logged?: string; // email
 }
 
 const AuthContext = createContext<AuthContextType>(
@@ -28,7 +28,7 @@ export function AuthProvider({
     children: ReactNode;
 }): JSX.Element {
     const [user, setUser] = useState<User>();
-    const [logged, setLogged] = useState<string | boolean>(false);
+    const [logged, setLogged] = useState<string>();
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(login, []);
@@ -41,12 +41,12 @@ export function AuthProvider({
 
             getCurrentUser()
                 .then((res) => {
-                    if(!res?.email){
-                        setLogged(false);
+                    if (!res?.email) {
+                        setLogged(undefined);
                         throw new Error("Invalid user");
                     }
+                    setUser(res.profile);
                     setLogged(res.email);
-                    setUser(res.user);
                     setLoading(false)
                 })
                 .catch((_error) => { });

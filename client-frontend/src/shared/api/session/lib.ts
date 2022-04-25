@@ -3,7 +3,7 @@ import type { User } from "../types";
 import * as api from '../apiRequest'
 
 export type userResponseDto = {
-    user: User;
+    profile: User;
     email: string;
 }
 
