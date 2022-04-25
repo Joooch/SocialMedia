@@ -123,7 +123,10 @@ export default function ProfileSettings(props: { profileImage?: string }) {
         }
 
         setUploading(true)
-        profileUpdate(dto).finally(() => {
+        profileUpdate(dto).then(e => {
+            console.log(e)
+            console.log(e.data)
+        }).finally(() => {
             setTimeout(() => {
                 setUploading(false)
             }, 1000);

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using SocialMedia.API;
 using SocialMedia.API.Extensions;
 using SocialMedia.API.Middleware;
 using SocialMedia.Infrastructure;
@@ -18,11 +19,12 @@ var authOptions = new AuthOptions(config["Secret"]);
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddAuthorization();
+//services.AddAutoMapper(typeof(AppMapperConfig));
+services.AddAutoMapper(typeof(MainAssembly));
 
 services.AddSingleton<AuthOptions>(authOptions);
 services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 services.AddScoped(typeof(IProfileRepository), typeof(ProfileRepository));
-services.AddAutoMapper(typeof(ApplicationDbContext));
 
 services.AddDbContext<ApplicationDbContext>(options =>
 {

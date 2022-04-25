@@ -22,6 +22,7 @@ namespace SocialMedia.API.Controllers
             _profileRepository = profileRepository;
             _userRepository = userRepository;
             _appEnv = appEnv;
+            _mapper = mapper;
         }
 
         [HttpPut("")]
@@ -37,6 +38,7 @@ namespace SocialMedia.API.Controllers
             if (profile == null)
             {
                 profile = _mapper.Map<Domain.Profile>(profileDto);
+                profile.User = user;
                 _profileRepository.Add(profile);
                 await _profileRepository.SaveAsync();
             }
