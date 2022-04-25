@@ -6,5 +6,6 @@ namespace SocialMedia.Infrastructure.Interfaces
     {
         public Task<Profile?> GetByUser(User user);
         public Task<bool> IsExists(User user);
+
     }
 }

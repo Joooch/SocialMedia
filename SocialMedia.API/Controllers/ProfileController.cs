@@ -1,27 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
 using SocialMedia.Common.Dtos.User;
 using SocialMedia.Infrastructure.Interfaces;
+using SocialMedia.Domain;
 
 namespace SocialMedia.API.Controllers
 {
     public class ProfileController : BaseController
     {
+        private IProfileRepository _profileRepository { get; set; }
         private IUserRepository _userRepository { get; set; }
         private IWebHostEnvironment _appEnv;
+        private readonly IMapper _mapper;
 
 
-        public ProfileController(IWebHostEnvironment appEnv, IUserRepository userRepository)
+        public ProfileController(IWebHostEnvironment appEnv, IUserRepository userRepository, IProfileRepository profileRepository, IMapper mapper)
         {
+            _profileRepository = profileRepository;
             _userRepository = userRepository;
             _appEnv = appEnv;
         }
 
         [HttpPut("")]
-        public IActionResult Update(ProfileDto profile)
+        public async Task<IActionResult> Update(ProfileUpdateDto profileDto)
         {
+            var user = await _userRepository.GetByEmail(HttpContext.User.Identity!.Name!);
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            var profile = await _profileRepository.GetByUser(user);
+            if (profile == null)
+            {
+                var newProfile = _mapper.Map<Domain.Profile>(profileDto);
+                _profileRepository.Add(newProfile);
+                await _profileRepository.SaveAsync();
+            }
+
+            //var profile = _mapper.Map<Profile>(profileDto);
+            //_profileRepository.Remove()
+            //_profileRepository.Add()
             return Ok();
         }
 

@@ -19,9 +19,14 @@ namespace SocialMedia.Infrastructure.Repositories
             get => _dbContext.Set<T>();
         }
 
-        public ValueTask<EntityEntry<T>> Add(T entity)
+        public EntityEntry<T> Add(T entity)
         {
-            return EntitySet.AddAsync(entity);
+            return EntitySet.Add(entity);
+        }
+
+        public EntityEntry<T> Remove(T entity)
+        {
+            return EntitySet.Remove(entity);
         }
 
         public Task<T?> Get(Expression<Func<T, bool>> filter)
@@ -32,11 +37,6 @@ namespace SocialMedia.Infrastructure.Repositories
         public Task<List<T>> GetAll()
         {
             return EntitySet.ToListAsync();
-        }
-
-        public void Remove(T entity)
-        {
-            EntitySet.Remove(entity);
         }
 
         public Task<int> SaveAsync()

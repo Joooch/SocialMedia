@@ -1,16 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SocialMedia.Domain
+namespace SocialMedia.Common.Dtos.User
 {
-    public class Profile : BaseEntity
+    public class ProfileUpdateDto
     {
-        [Key, ForeignKey(nameof(User))]
-        public Guid UserId { get; set; }
-
-        public User User { get; set; }
-
-
         [Required, MinLength(3), MaxLength(50)]
         public string FirstName { get; set; }
 
