@@ -33,7 +33,7 @@ export function AuthProvider({
     const [logged, setLogged] = useState<string>();
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [cookies, setCookie] = useCookies(["Token"]);
+    const [cookies, setCookie, removeCookie] = useCookies(["Token"]);
     useEffect(login, []);
 
     function login(token?: string) {
@@ -68,7 +68,7 @@ export function AuthProvider({
     async function logOut() {
         setUser(undefined);
         setLogged(undefined);
-        setCookie("Token", undefined);
+        removeCookie("Token");
     }
 
     const memoedValue = useMemo(
