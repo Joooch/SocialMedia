@@ -68,7 +68,7 @@ const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => 
     return true;
 }
 
-export default function ProfileSettings(props: { profile?: User, email: string }) {
+export default function ProfileSettings(props: { profile?: User, email: string, onChange?: () => void }) {
 
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 15);
@@ -110,7 +110,6 @@ export default function ProfileSettings(props: { profile?: User, email: string }
 
     const uploadChanges = () => {
         if (date == null) {
-            console.log('date == null')
             return
         }
         const isValid = validateForm({ date, firstName, lastName, address, city, region: region, county: country }, setErrors, true);
@@ -129,6 +128,9 @@ export default function ProfileSettings(props: { profile?: User, email: string }
         }).finally(() => {
             setTimeout(() => {
                 setUploading(false)
+                if(props.onChange){
+                    props?.onChange()
+                }
             }, 1000);
         })
     }
