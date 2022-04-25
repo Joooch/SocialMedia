@@ -45,7 +45,7 @@ namespace SocialMedia.API.Controllers
                     };
                     user.Token = CreateToken(user);
 
-                    await _userRepository.Add(user);
+                    _userRepository.Add(user);
                     await _userRepository.SaveAsync();
 
                     return Json(new { Token = user.Token });
