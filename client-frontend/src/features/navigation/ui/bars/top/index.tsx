@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import { useAuth } from 'shared/api';
 
 const settings = ['Profile', 'Account', 'Logout'];
 
@@ -23,6 +24,7 @@ const pages: StringMap = {
 export function NavigationTopBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const {logOut} = useAuth();
     //const history = useHistory();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,6 +41,12 @@ export function NavigationTopBar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleUserClick = (type: string) => {
+        if(type === "Logout"){
+            logOut();
+        }
+    }
 
     return (
         <AppBar position="static">
@@ -139,7 +147,10 @@ export function NavigationTopBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem key={setting} onClick={() =>{
+                                    handleCloseUserMenu();
+                                    handleUserClick(setting)
+                                }}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}

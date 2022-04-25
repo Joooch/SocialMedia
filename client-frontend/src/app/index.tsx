@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import { NavigationTopBar } from 'features/navigation/ui/bars/top';
 import { LeftNavigationBar } from 'features/navigation/ui/bars/left';
 import { useAuth } from 'shared/api/session';
-import { User } from 'shared/api';
 import ProfileSetupPage from 'pages/ProfileSetup';
 import { CircularProgress } from '@mui/material';
 import { Box } from '@mui/system';
@@ -34,16 +33,17 @@ function PageLayout() {
   </div>
 }
 
-function LoggedPage(props: { user: User | undefined }) {
-  if (props.user) {
+function LoggedPage(props: { veryfied: boolean }) {
+  if (props.veryfied) {
     return <BrowserRouter> <NavigationTopBar /> <PageLayout /> </BrowserRouter>
   } else {
-    return <ProfileSetupPage />
+    return <ProfileSetupPage/>
   }
 }
 
 function AppWrapper() {
   const { user, loading, logged } = useAuth()
+
   if(loading){
     return (
       <Box className="center-of-screen">
@@ -55,7 +55,7 @@ function AppWrapper() {
       <>
         {!logged
           ? <LoginPage />
-          : <LoggedPage user={user} />
+          : <LoggedPage veryfied={!!user} />
         }
       </>
     )

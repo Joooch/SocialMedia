@@ -3,9 +3,6 @@ import Typography from '@mui/material/Typography';
 import { Send } from '@mui/icons-material';
 import './index.css';
 
-
-const settings = ['Profile', 'Account', 'Logout'];
-
 interface StringMap { [key: string]: string; }
 const pages: StringMap = {
     "Products": "/login",

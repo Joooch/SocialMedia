@@ -6,15 +6,17 @@ import {
     useMemo,
     useState,
 } from "react";
-import { getCurrentUser, getTokenByGoogle, getCookie, setCookie } from "./lib";
+import { getCurrentUser, getTokenByGoogle } from "./lib";
 import type { User } from '../types';
 import axios from "axios";
+import { useCookies } from 'react-cookie';
 
 interface AuthContextType {
     user?: User;
     loading?: boolean;
     login: (token?: string) => void;
     loginGoogle: (token: string) => void;
+    logOut: () => void;
     logged?: string; // email
 }
 
@@ -31,10 +33,11 @@ export function AuthProvider({
     const [logged, setLogged] = useState<string>();
     const [loading, setLoading] = useState<boolean>(false);
 
+    const [cookies, setCookie] = useCookies(["Token"]);
     useEffect(login, []);
 
     function login(token?: string) {
-        let jwtToken = token ?? getCookie("Token");
+        let jwtToken = token ?? cookies.Token;
         if (jwtToken) {
             setLoading(true)
             axios.defaults.headers.common['Authorization'] = jwtToken;
@@ -57,9 +60,15 @@ export function AuthProvider({
     }
 
     async function loginGoogle(googleToken: string) {
-        console.log('login by google:', googleToken)
         let response = await getTokenByGoogle(googleToken)
         setCookie("Token", response)
+        login(response);
+    }
+
+    async function logOut() {
+        setUser(undefined);
+        setLogged(undefined);
+        setCookie("Token", undefined);
     }
 
     const memoedValue = useMemo(
@@ -68,7 +77,8 @@ export function AuthProvider({
             login,
             loginGoogle,
             logged,
-            loading
+            loading,
+            logOut
         }),
         [user, logged, loading]
     );

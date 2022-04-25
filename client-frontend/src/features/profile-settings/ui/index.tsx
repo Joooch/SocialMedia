@@ -6,6 +6,7 @@ import { UserAvatar } from 'entities/user';
 import SendIcon from '@mui/icons-material/Send';
 import { profileUpdate, ProfileUpdateDto, profileUpdateImage } from 'shared/api/profile'
 import { CircularProgress, TextField } from '@mui/material';
+import { User } from 'shared/api';
 
 type FormErrors = {
     firstName?: boolean,
@@ -67,20 +68,19 @@ const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => 
     return true;
 }
 
-export default function ProfileSettings(props: { profileImage?: string }) {
-    let _profileImage = props.profileImage
+export default function ProfileSettings(props: { profile?: User, email: string }) {
 
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 15);
 
     const [date, setDate] = useState<Date | null>(maxDate);
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
+    const [firstName, setFirstName] = useState<string>(props.profile?.firstName ?? "");
+    const [lastName, setLastName] = useState<string>(props.profile?.lastName ?? "");
     const [address, setAddress] = useState<string>("");
     const [city, setCity] = useState<string>("");
     const [region, setRegion] = useState<string>("");
     const [country, setCountry] = useState<string>("");
-    const [profileImage, setProfileImage] = useState<string | undefined>(_profileImage);
+    const [profileImage, setProfileImage] = useState<string | undefined>(props.profile ? "/img/users/" + props.profile.userId + ".webp" : undefined);
 
     const [uploading, setUploading] = useState<boolean>(false);
 
@@ -161,7 +161,7 @@ export default function ProfileSettings(props: { profileImage?: string }) {
                         autoComplete="email"
                         variant="outlined"
                         disabled={true}
-                        value={"Helo"}
+                        value={props.email}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
