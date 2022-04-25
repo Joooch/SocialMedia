@@ -39,8 +39,8 @@ const isStringInvalid = (value: string | undefined, minLength: number, maxLength
 
 const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => void, assertNull?: boolean): boolean => {
     const errors: FormErrors = {
-        firstName: isStringInvalid(props.firstName, 5, 50),
-        lastName: isStringInvalid(props.lastName, 5, 50),
+        firstName: isStringInvalid(props.firstName, 3, 50),
+        lastName: isStringInvalid(props.lastName, 3, 50),
         address: isStringInvalid(props.address, 5, 100),
         city: isStringInvalid(props.city, 5, 30),
         region: isStringInvalid(props.region, 2, 50),
