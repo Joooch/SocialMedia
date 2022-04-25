@@ -7,14 +7,15 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { useAuth } from 'shared/api';
+import { UserAvatar } from 'entities/user';
+import { useNavigate } from 'react-router-dom'
 
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = ['Profile', 'Settings', 'Logout'];
 
 interface StringMap { [key: string]: string; }
 const pages: StringMap = {
@@ -24,8 +25,8 @@ const pages: StringMap = {
 export function NavigationTopBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const {logOut} = useAuth();
-    //const history = useHistory();
+    const { logOut, user } = useAuth();
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -43,8 +44,10 @@ export function NavigationTopBar() {
     };
 
     const handleUserClick = (type: string) => {
-        if(type === "Logout"){
+        if (type === "Logout") {
             logOut();
+        } else if (type === "Settings") {
+            navigate("/settings")
         }
     }
 
@@ -127,7 +130,8 @@ export function NavigationTopBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                                <UserAvatar user={user} size={64}></UserAvatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -147,7 +151,7 @@ export function NavigationTopBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={() =>{
+                                <MenuItem key={setting} onClick={() => {
                                     handleCloseUserMenu();
                                     handleUserClick(setting)
                                 }}>
