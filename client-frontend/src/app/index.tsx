@@ -2,6 +2,7 @@ import './styles/index.css';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import HomePage from 'pages/Home';
 import LoginPage from 'pages/Login';
+import ProfilePage from 'pages/Profile';
 import Grid from '@mui/material/Grid';
 import { NavigationTopBar } from 'features/navigation/ui/bars/top';
 import { LeftNavigationBar } from 'features/navigation/ui/bars/left';
@@ -14,6 +15,7 @@ const Routes = () => {
   let routes = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/settings", element: <ProfileSetupPage /> },
+    { path: "/profile/:id", element: <ProfilePage /> }
     //{ path: "/login", element: <Login /> },
   ])
   return routes;
@@ -38,20 +40,20 @@ function LoggedPage(props: { veryfied: boolean }) {
   if (props.veryfied) {
     return <BrowserRouter> <NavigationTopBar /> <PageLayout /> </BrowserRouter>
   } else {
-    return <ProfileSetupPage/>
+    return <ProfileSetupPage />
   }
 }
 
 function AppWrapper() {
   const { user, loading, logged } = useAuth()
 
-  if(loading){
+  if (loading) {
     return (
       <Box className="center-of-screen">
         <CircularProgress size={"100px"} />
       </Box>
     )
-  }else{
+  } else {
     return (
       <>
         {!logged
