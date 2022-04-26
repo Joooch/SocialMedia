@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Common.Dtos.User;
 using SocialMedia.Infrastructure.Interfaces;
@@ -20,7 +19,6 @@ namespace SocialMedia.API.Controllers
         }
 
         [HttpGet()]
-        [Authorize]
         public async Task<UserDto> Get()
         {
             var user = await _userRepository.GetByEmail(HttpContext.User.Identity!.Name!);
@@ -37,6 +35,18 @@ namespace SocialMedia.API.Controllers
             };
 
             return response;
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ProfileProtectedDto> GetById(string userId)
+        {
+            var profile = await _profileRepository.GetByUserId(userId);
+            if (profile == null)
+            {
+                throw new ArgumentException("invalid user");
+            }
+
+            return _mapper.Map<ProfileProtectedDto>(profile);
         }
     }
 }

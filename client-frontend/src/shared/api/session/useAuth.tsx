@@ -7,12 +7,12 @@ import {
     useState,
 } from "react";
 import { getCurrentUser, getTokenByGoogle } from "./lib";
-import type { User } from '../types';
+import type { UserFull } from '../types';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
 
 interface AuthContextType {
-    user?: User;
+    user?: UserFull;
     loading?: boolean;
     login: (token?: string) => void;
     loginGoogle: (token: string) => void;
@@ -29,7 +29,7 @@ export function AuthProvider({
 }: {
     children: ReactNode;
 }): JSX.Element {
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<UserFull>();
     const [logged, setLogged] = useState<string>();
     const [loading, setLoading] = useState<boolean>(false);
 

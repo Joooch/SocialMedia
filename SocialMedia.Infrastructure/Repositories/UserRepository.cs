@@ -14,6 +14,11 @@ namespace SocialMedia.Infrastructure.Repositories
             return Get(x => x.Email == email);
         }
 
+        public Task<User?> GetById(string id)
+        {
+            return Get(x => x.UserId.ToString() == id);
+        }
+
         public Task<bool> IsConfirmed(User user)
         {
             var profileRepository = new ProfileRepository(_dbContext);

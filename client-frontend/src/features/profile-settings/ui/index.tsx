@@ -6,7 +6,7 @@ import { UserAvatar } from 'entities/user';
 import SendIcon from '@mui/icons-material/Send';
 import { profileUpdate, ProfileUpdateDto, profileUpdateImage } from 'shared/api/profile'
 import { CircularProgress, TextField } from '@mui/material';
-import { User } from 'shared/api';
+import { UserFull } from 'shared/api';
 
 type FormErrors = {
     firstName?: boolean,
@@ -68,7 +68,7 @@ const validateForm = (props: ValidateProps, setErrors?: (errors: FormErrors) => 
     return true;
 }
 
-export default function ProfileSettings(props: { profile?: User, email: string, onChange?: () => void }) {
+export default function ProfileSettings(props: { profile?: UserFull, email: string, onChange?: () => void }) {
 
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 15);
@@ -76,10 +76,10 @@ export default function ProfileSettings(props: { profile?: User, email: string, 
     const [date, setDate] = useState<Date | null>(maxDate);
     const [firstName, setFirstName] = useState<string>(props.profile?.firstName ?? "");
     const [lastName, setLastName] = useState<string>(props.profile?.lastName ?? "");
-    const [address, setAddress] = useState<string>("");
-    const [city, setCity] = useState<string>("");
-    const [region, setRegion] = useState<string>("");
-    const [country, setCountry] = useState<string>("");
+    const [address, setAddress] = useState<string>(props.profile?.address ?? "");
+    const [city, setCity] = useState<string>(props.profile?.city ?? "");
+    const [region, setRegion] = useState<string>(props.profile?.region ?? "");
+    const [country, setCountry] = useState<string>(props.profile?.country ?? "");
     const [profileImage, setProfileImage] = useState<string | undefined>(props.profile ? "/img/users/" + props.profile.userId + ".webp" : undefined);
 
     const [uploading, setUploading] = useState<boolean>(false);

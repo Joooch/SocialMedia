@@ -19,4 +19,13 @@ namespace SocialMedia.Common.Dtos.User
 
         public string Country { get; set; }
     }
+
+    public class ProfileProtectedDto
+    {
+        public Guid UserId { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+    }
 }

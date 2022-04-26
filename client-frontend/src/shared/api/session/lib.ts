@@ -1,8 +1,8 @@
-import type { User } from "../types";
+import type { UserFull } from "../types";
 import * as api from '../apiRequest'
 
 export type userResponseDto = {
-    profile: User;
+    profile: UserFull;
     email: string;
 }
 

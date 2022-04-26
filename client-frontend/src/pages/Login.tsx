@@ -1,8 +1,6 @@
 import { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogin } from 'react-google-login';
 import { useAuth } from 'shared/api/session';
-import Button from '@mui/material/Button'
-import { Box, Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add'
+import { Box } from '@mui/material';
 export const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID!;
 
 
