@@ -9,6 +9,7 @@ namespace SocialMedia.API.Middleware
         public AutoMapperConfiguration()
         {
             CreateMap<Profile, ProfileDto>().ReverseMap();
+            CreateMap<Profile, ProfileProtectedDto>();
             CreateMap<ProfileUpdateDto, Profile>();
         }
     }
