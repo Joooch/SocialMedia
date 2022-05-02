@@ -8,7 +8,7 @@ import { NavigationTopBar } from 'features/navigation/ui/bars/top';
 import { LeftNavigationBar } from 'features/navigation/ui/bars/left';
 import { useAuth } from 'shared/api/session';
 import ProfileSetupPage from 'pages/ProfileSetup';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import { Box } from '@mui/system';
 
 const Routes = () => {
@@ -23,7 +23,7 @@ const Routes = () => {
 
 function PageLayout() {
   return <div className="center-content">
-    <Grid container wrap='nowrap' justifyContent="space-evenly" xl={9}>
+    {/* <Grid container wrap='nowrap' justifyContent="space-evenly" xl={9}>
       <Grid item whiteSpace="nowrap" xs sx={{ mr: 4, display: { xs: 'none', md: 'none', lg: "block" } }}>
         <LeftNavigationBar />
       </Grid>
@@ -32,7 +32,11 @@ function PageLayout() {
         <Routes />
       </Grid>
 
-    </Grid>
+    </Grid> */}
+    <Container>
+      <Routes />
+    </Container>
+
   </div>
 }
 
