@@ -50,9 +50,15 @@ export function AuthProvider({
                     }
                     setUser(res.profile);
                     setLogged(res.email);
-                    setLoading(false)
                 })
-                .catch((_error) => { });
+                .catch((_error) => {
+                    console.log('error')
+                    setLogged(undefined);
+                })
+                .finally(() => {
+                    setLoading(false)
+                    console.log(user)
+                });
         } else {
             setLoading(false)
             console.log("null token");
