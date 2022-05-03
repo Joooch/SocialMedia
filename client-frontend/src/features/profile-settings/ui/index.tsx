@@ -27,8 +27,8 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
 
     const { control, handleSubmit, formState: { errors } } = useForm<ProfileUpdateDto>({
         reValidateMode: "onBlur",
-         defaultValues: useMemo(() => {
-            if(!props.profile){
+        defaultValues: useMemo(() => {
+            if (!props.profile) {
                 return {}
             }
 
@@ -69,7 +69,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
     const onSubmit = (form: ProfileUpdateDto) => {
         setUploading(true)
         profileUpdate(form).then(e => {
-            
+
         }).finally(() => {
             setTimeout(() => {
                 setUploading(false)
@@ -85,7 +85,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
             <Grid container spacing={3}>
                 <Grid item xs className='center-content center-text'>
                     <Stack>
-                        <UserAvatar src={profileImage} size={128} />
+                        <UserAvatar user={props.profile} size={128} />
                         <Button onClick={doUploadFile}>
                             Change
                         </Button>
@@ -93,6 +93,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
                             type="file"
                             ref={fileInput}
                             onChange={onSelectImage}
+                            title="imageSelector"
                             style={{ display: 'none' }}
                         />
                     </Stack>
