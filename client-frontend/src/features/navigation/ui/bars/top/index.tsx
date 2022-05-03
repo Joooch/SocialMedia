@@ -48,6 +48,8 @@ export function NavigationTopBar() {
             logOut();
         } else if (type === "Settings") {
             navigate("/settings")
+        } else if (type === "Profile"){
+            navigate("/profile/" + user?.userId)
         }
     }
 
