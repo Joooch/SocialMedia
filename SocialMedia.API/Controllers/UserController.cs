@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocialMedia.API.Exceptions;
 using SocialMedia.Common.Dtos.User;
 using SocialMedia.Infrastructure.Interfaces;
 
@@ -38,12 +40,13 @@ namespace SocialMedia.API.Controllers
         }
 
         [HttpGet("{userId}")]
+        [AllowAnonymous]
         public async Task<ProfileProtectedDto> GetById(string userId)
         {
             var profile = await _profileRepository.GetByUserId(userId);
             if (profile == null)
             {
-                throw new ArgumentException("invalid user");
+                throw new InvalidUserException(userId);
             }
 
             return _mapper.Map<ProfileProtectedDto>(profile);

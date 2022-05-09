@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocialMedia.API.Exceptions;
 using SocialMedia.Domain;
 using SocialMedia.Infrastructure.Interfaces;
 
@@ -8,6 +9,7 @@ namespace SocialMedia.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
+    [CustomExceptionFilter]
     public class BaseController : Controller
     {
         /*private readonly IUserRepository _userRepository;
