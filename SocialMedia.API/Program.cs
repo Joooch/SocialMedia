@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using SocialMedia.API;
+using SocialMedia.API.Exceptions;
 using SocialMedia.API.Extensions;
 using SocialMedia.API.Middleware;
 using SocialMedia.Common.Dtos.User;
@@ -11,9 +12,12 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
-// Add services to the container.
+/*builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ConfigureEndpointDefaults(cfg => {})
+});*/
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 var services = builder.Services;
 var authOptions = new AuthOptions(config["Secret"]);
 
@@ -22,7 +26,6 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddAuthorization();
 services.AddAutoMapper(typeof(AutoMapperConfiguration));
-//services.AddAutoMapper(typeof(ApplicationDbContext));
 
 services.AddSingleton<AuthOptions>(authOptions);
 services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
@@ -40,27 +43,31 @@ services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOr
 var app = builder.Build();
 
 app.UseCors(cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 app.UseHttpsRedirection();
 
-var fileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Static/img"));
-var requestPath = "/img";
 
+var fileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Static/img"));
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = fileProvider,
-    RequestPath = requestPath
+    RequestPath = "/img"
 });
 
 //app.UseCookiePolicy();
-//app.UseRouting();
+app.UseRouting();
 app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<LoggerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
