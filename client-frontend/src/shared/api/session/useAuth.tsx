@@ -1,6 +1,7 @@
 import {
     createContext,
     ReactNode,
+    useCallback,
     useContext,
     useEffect,
     useMemo,
@@ -34,9 +35,8 @@ export function AuthProvider({
     const [loading, setLoading] = useState<boolean>(false);
 
     const [cookies, setCookie, removeCookie] = useCookies(["Token"]);
-    useEffect(login, [cookies.Token]);
 
-    function login(token?: string) {
+    const login = useCallback((token?: string) => {
         let jwtToken = token ?? cookies.Token;
         if (jwtToken) {
             setLoading(true)
@@ -63,20 +63,24 @@ export function AuthProvider({
             setLoading(false)
             console.log("null token");
         }
-    }
+    }, [cookies.Token, user])
+    useEffect(login, [cookies.Token, login]);
 
-    async function loginGoogle(googleToken: string) {
-        let response = await getTokenByGoogle(googleToken)
-        setCookie("Token", response)
-        login(response);
-    }
 
-    async function logOut() {
+    const loginGoogle = useCallback(async (token: string) => {
+        let jwtSessionToken = await getTokenByGoogle(token)
+        setCookie("Token", jwtSessionToken)
+        login(jwtSessionToken);
+    }, [login, setCookie]);
+
+
+    const logOut = useCallback(() => {
         setUser(undefined);
         setLogged(undefined);
         removeCookie("Token");
-    }
+    }, [removeCookie]);
 
+    
     const memoedValue = useMemo(
         () => ({
             user,
@@ -86,7 +90,7 @@ export function AuthProvider({
             loading,
             logOut
         }),
-        [user, logged, loading]
+        [user, login, loginGoogle, logged, loading, logOut]
     );
 
     return (
