@@ -1,3 +1,6 @@
 .profile-header {
-    position: sticky
+    padding: 10px 10px 10px 10px;
+    position: -webkit-sticky; /* Safari */  
+    position: sticky;
+    top: 0;
 }

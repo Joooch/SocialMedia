@@ -5,14 +5,16 @@ import { Skeleton } from '@mui/material';
 
 const defaultUserImg = "/img/user.png"
 
-export const UserAvatar = (props: { user?: User, size?: number | string }) => {
+export const UserAvatar = (props: { user?: User | string, size?: number | string }) => {
     const [imageSrc, setImageSrc] = useState<string>();
 
-    
-
     useMemo(() => {
-        setImageSrc("/img/users/" + props.user?.userId + ".webp" || defaultUserImg)
-    }, [props.user?.userId])
+        if(typeof props.user === "string"){
+            setImageSrc(props.user || defaultUserImg)
+        }else{
+            setImageSrc("/img/users/" + props.user?.userId + ".webp" || defaultUserImg)
+        }
+    }, [props.user])
 
     if(props.user === undefined){ // render skeleton instead
         return (
@@ -23,7 +25,7 @@ export const UserAvatar = (props: { user?: User, size?: number | string }) => {
     return (
         <img
             className='user-avatar'
-            alt={props.user?.firstName ?? "user-avatar"}
+            alt={typeof props.user == "string" ? "user avatar" : props.user?.firstName ?? "user-avatar"}
             src={imageSrc}
             width={props.size}
             height={props.size}
