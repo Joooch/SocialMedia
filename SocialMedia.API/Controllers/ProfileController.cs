@@ -1,92 +1,60 @@
-﻿using AutoMapper;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Processing;
-using SocialMedia.Common.Dtos.User;
-using SocialMedia.Infrastructure.Interfaces;
-using SocialMedia.Domain;
+using SocialMedia.API.Exceptions;
+using SocialMedia.API.Extensions;
+using SocialMedia.Application.App.Profiles.Commands;
+using SocialMedia.Application.App.Profiles.Queries;
+using SocialMedia.Application.App.Profiles.Responses;
 
 namespace SocialMedia.API.Controllers
 {
     public class ProfileController : BaseController
     {
-        private IProfileRepository _profileRepository { get; set; }
-        private IUserRepository _userRepository { get; set; }
         private IWebHostEnvironment _appEnv;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-
-        public ProfileController(IWebHostEnvironment appEnv, IUserRepository userRepository, IProfileRepository profileRepository, IMapper mapper)
+        public ProfileController(IWebHostEnvironment appEnv, IMediator mediator)
         {
-            _profileRepository = profileRepository;
-            _userRepository = userRepository;
             _appEnv = appEnv;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpPut("")]
-        public async Task<ProfileDto> Update(ProfileUpdateDto profileDto)
+        public async Task<ProfileDto> Update(UpdateProfileRequest updateProfileRequest)
         {
-            var user = await _userRepository.GetByEmail(HttpContext.User.Identity!.Name!);
-            if (user == null)
+            var profileDto = await _mediator.Send(new UpdateProfileCommand()
             {
-                throw new UnauthorizedAccessException();
-            }
-
-            var profile = await _profileRepository.GetByUser(user);
-            if (profile == null)
-            {
-                profile = _mapper.Map<Domain.Profile>(profileDto);
-                profile.User = user;
-                _profileRepository.Add(profile);
-                await _profileRepository.SaveAsync();
-            }
-            else
-            {
-                profile.FirstName = profileDto.FirstName;
-                profile.LastName = profileDto.LastName;
-                profile.Address = profileDto.Address;
-                profile.City = profileDto.City;
-                profile.Region = profileDto.Region;
-                profile.Country = profileDto.Country;
-
-                await _profileRepository.SaveAsync();
-            }
-
-            //var profile = _mapper.Map<Profile>(profileDto);
-            //_profileRepository.Remove()
-            //_profileRepository.Add()
-            return _mapper.Map<ProfileDto>(profile);
+                Request = updateProfileRequest,
+                UserId = HttpContext.User.GetUserId(),
+            });
+            return profileDto;
         }
 
         [HttpPut("image")]
-        public async Task<IActionResult> UpdateImage(IFormFile file)
+        public async Task<BookSuccessImageUpdateDto> UpdateImage(IFormFile file)
         {
-            var user = await _userRepository.GetByEmail(HttpContext.User.Identity!.Name!);
-            if (user == null)
+            var userId = HttpContext.User.GetUserId();
+            var rootPath = _appEnv.ContentRootPath;
+            var responseDto = await _mediator.Send(new UpdateProfileImageCommand()
             {
-                throw new UnauthorizedAccessException();
+                UserId = userId,
+                FileForm = file,
+                RootPath = rootPath
+            });
+
+            return responseDto;
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ProfileProtectedDto> GetById(string userId)
+        {
+            var profileDto = await _mediator.Send(new GetProfileByUserIdQuery() { UserId = userId });
+            if (profileDto is null)
+            {
+                throw new InvalidUserException(userId);
             }
 
-            //var filename = Path.Combine(builder.Environment.ContentRootPath, "Static/img");
-            var publicPath = "img/users/" + user.UserId + ".webp";
-            var staticFolderPath = Path.Combine(_appEnv.ContentRootPath, "Static");
-            var fullPath = Path.Combine(staticFolderPath, publicPath);
-
-            IImageFormat format;
-            using var fileStream = file.OpenReadStream();
-            using var image = Image.Load(fileStream, out format);
-
-            image.Mutate(c => c.Resize(new ResizeOptions
-            {
-                Size = new Size(128, 128),
-                Mode = ResizeMode.Crop,
-                Position = AnchorPositionMode.Center
-            }));
-            image.SaveAsWebp(fullPath);
-
-            return Ok(new { filename = "/" + publicPath });
+            return profileDto;
         }
     }
 }

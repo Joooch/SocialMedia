@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SocialMedia.Application;
+using SocialMedia.Application.Extensions;
+using SocialMedia.Infrastructure.Extensions;
 using System.Text;
 
 namespace SocialMedia.API.Extensions
@@ -37,7 +40,7 @@ namespace SocialMedia.API.Extensions
 
     }
 
-    public static class ServiceExtensions
+    public static class ServiceCollectionExtensions
     {
         public static void AddJwtAuthentication(this IServiceCollection services, AuthOptions authOptions)
         {
@@ -49,7 +52,10 @@ namespace SocialMedia.API.Extensions
             {
                 options.TokenValidationParameters = authOptions.TokenValidation;
             });
+        }
 
+        public static void AddSwagger(this IServiceCollection services)
+        {
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Web API", Version = "v1" });
@@ -58,7 +64,9 @@ namespace SocialMedia.API.Extensions
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
                 });
                 c.AddSecurityRequirement(
                     new OpenApiSecurityRequirement
@@ -77,6 +85,25 @@ namespace SocialMedia.API.Extensions
                     }
                 );
             });
+        }
+
+        public static IServiceCollection AddAPIServices(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddEndpointsApiExplorer();
+
+            var authOptions = new AuthOptions(config["Secret"]);
+            services.AddSingleton(authOptions);
+
+            services.AddAuthorization();
+            services.AddJwtAuthentication(authOptions);
+
+            services.AddInfrastructure(config);
+            services.AddApplication();
+            services.AddAutoMapper(typeof(ApplicationAssembly));
+
+            services.AddSwagger();
+
+            return services;
         }
     }
 }
