@@ -1,6 +1,6 @@
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { UserAvatar } from 'entities/user';
 import SendIcon from '@mui/icons-material/Send';
@@ -18,30 +18,29 @@ import { Controller, useForm } from 'react-hook-form';
     city?: string,
     country?: string,
 } */
+const maxDate = new Date()
+maxDate.setFullYear(maxDate.getFullYear() - 15);
 
 export default function ProfileSettings(props: { profile?: UserFull, email: string, onChange?: () => void }) {
+    const defaultValue = (() => {
+        if (!props.profile) {
+            return {}
+        }
 
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 15);
-
+        return {
+            "date": maxDate,
+            "firstName": props.profile.firstName,
+            "lastName": props.profile.lastName,
+            "region": props.profile.region,
+            "city": props.profile.city,
+            "country": props.profile.country,
+            "address": props.profile.address
+        }
+    })()
 
     const { control, handleSubmit, formState: { errors } } = useForm<ProfileUpdateDto>({
         reValidateMode: "onBlur",
-        defaultValues: useMemo(() => {
-            if (!props.profile) {
-                return {}
-            }
-
-            return {
-                "date": maxDate,
-                "firstName": props.profile.firstName,
-                "lastName": props.profile.firstName,
-                "region": props.profile.region,
-                "city": props.profile.city,
-                "country": props.profile.country,
-                "address": props.profile.address
-            }
-        }, [props])
+        defaultValues: defaultValue
     });
 
 
@@ -49,6 +48,12 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
     const [uploading, setUploading] = useState<boolean>(false);
 
     const fileInput = React.useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (props.profile === null) {
+            setProfileImage("")
+        }
+    }, [props.profile])
 
     const doUploadFile = () => {
         fileInput?.current?.click();
@@ -62,7 +67,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
         const image = files[0];
 
         profileUpdateImage(image).then(res => {
-            setProfileImage(res.data.filename + "?" + new Date().getTime())
+            setProfileImage(res.data.filePath + "?" + new Date().getTime())
         })
     }
 
@@ -85,7 +90,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
             <Grid container spacing={3}>
                 <Grid item xs className='center-content center-text'>
                     <Stack>
-                        <UserAvatar user={props.profile} size={128} />
+                        <UserAvatar user={props.profile ?? profileImage} size={128} />
                         <Button onClick={doUploadFile}>
                             Change
                         </Button>
