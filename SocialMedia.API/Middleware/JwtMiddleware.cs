@@ -33,15 +33,15 @@ namespace SocialMedia.API.Middleware
                 tokenHandler.ValidateToken(token, authOptions.TokenValidation, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                //var accountId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                var email = jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.NameId).Value;
 
-                var user = await repository.GetByEmail(email);
+                var userId = jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.NameId).Value;
+
+                var user = await repository.GetById(userId);
                 if (user != null)
                 {
                     var identity = new ClaimsIdentity(new List<Claim>()
                     {
-                        new Claim(ClaimsIdentity.DefaultNameClaimType, email),
+                        new Claim(JwtRegisteredClaimNames.NameId, userId)
                     }, "basic");
                     context.User = new ClaimsPrincipal(identity);
                 }

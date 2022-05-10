@@ -19,7 +19,7 @@ const settings = ['Profile', 'Settings', 'Logout'];
 
 interface StringMap { [key: string]: string; }
 const pages: StringMap = {
-    "Products": "/login",
+    "Test route": "/login",
 }
 
 export function NavigationTopBar() {

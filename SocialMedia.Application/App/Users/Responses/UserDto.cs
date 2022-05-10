@@ -1,6 +1,6 @@
-﻿using SocialMedia.Domain;
+﻿using SocialMedia.Application.App.Profiles.Responses;
 
-namespace SocialMedia.Common.Dtos.User
+namespace SocialMedia.Application.App.Users.Responses
 {
     public class UserDto
     {

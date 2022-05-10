@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.API.Exceptions;
-using SocialMedia.Domain;
-using SocialMedia.Infrastructure.Interfaces;
+using SocialMedia.API.Extensions;
 
 namespace SocialMedia.API.Controllers
 {
@@ -12,15 +11,9 @@ namespace SocialMedia.API.Controllers
     [CustomExceptionFilter]
     public class BaseController : Controller
     {
-        /*private readonly IUserRepository _userRepository;
-        public BaseController( IUserRepository repository )
+        protected Guid GetUserId()
         {
-            _userRepository = repository;
+            return HttpContext.User.GetUserId();
         }
-
-        public async Task<User?> GetCurrentUser()
-        {
-            return await _userRepository.FindByEmail(HttpContext.User.Identity!.Name!);
-        }*/
     }
 }

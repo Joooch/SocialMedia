@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
-
-namespace SocialMedia.Common.Dtos.User
+﻿namespace SocialMedia.Application.App.Profiles.Responses
 {
     public class ProfileDto
     {

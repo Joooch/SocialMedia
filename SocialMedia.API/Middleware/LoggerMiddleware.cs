@@ -26,5 +26,4 @@
                 $"\tPath: {context.Request.Path}\n");
         }
     }
-
 }

@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SocialMedia.Common\SocialMedia.Common.csproj" />
+    <ProjectReference Include="..\SocialMedia.Application\SocialMedia.Application.csproj" />
     <ProjectReference Include="..\SocialMedia.Domain\SocialMedia.Domain.csproj" />
     <ProjectReference Include="..\SocialMedia.Infrastructure\SocialMedia.Infrastructure.csproj" />
   </ItemGroup>

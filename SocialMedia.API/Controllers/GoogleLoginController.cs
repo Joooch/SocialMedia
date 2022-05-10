@@ -64,7 +64,7 @@ namespace SocialMedia.API.Controllers
         private string CreateToken(User user)
         {
             var claims = new List<Claim>() {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Email)
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString())
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
