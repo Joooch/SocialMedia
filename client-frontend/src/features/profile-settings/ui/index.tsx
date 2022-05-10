@@ -44,7 +44,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
     });
 
 
-    const [profileImage, setProfileImage] = useState<string | undefined>(props.profile ? "/img/users/" + props.profile.userId + ".webp" : undefined);
+    const [profileImage, setProfileImage] = useState<string | undefined>(undefined);
     const [uploading, setUploading] = useState<boolean>(false);
 
     const fileInput = React.useRef<HTMLInputElement>(null);
@@ -90,7 +90,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
             <Grid container spacing={3}>
                 <Grid item xs className='center-content center-text'>
                     <Stack>
-                        <UserAvatar user={props.profile ?? profileImage} size={128} />
+                        <UserAvatar user={profileImage ?? props.profile} size={128} />
                         <Button onClick={doUploadFile}>
                             Change
                         </Button>
