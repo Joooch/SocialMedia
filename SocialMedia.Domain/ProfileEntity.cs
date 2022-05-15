@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMedia.Domain
 {
-    public class Profile : BaseEntity
+    [Table("Profiles")]
+    public class ProfileEntity : BaseEntity
     {
         [Key, ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
 
-        public User User { get; set; }
+        public UserEntity User { get; set; }
 
 
         [Required, MinLength(3), MaxLength(50)]

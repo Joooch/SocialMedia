@@ -2,11 +2,11 @@
 
 namespace SocialMedia.Infrastructure.Interfaces
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<UserEntity>
     {
-        public Task<User?> GetByEmail(string email);
-        public Task<User?> GetById(string id);
-        public Task<User?> GetById(Guid id);
-        public Task<bool> IsConfirmed(User user);
+        public Task<UserEntity?> GetByEmail(string email);
+        public Task<UserEntity?> GetById(string id);
+        public Task<UserEntity?> GetById(Guid id);
+        public Task<bool> IsConfirmed(UserEntity user);
     }
 }

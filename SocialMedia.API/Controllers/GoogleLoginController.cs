@@ -14,7 +14,6 @@ namespace SocialMedia.API.Controllers
     [AllowAnonymous]
     public class GoogleLoginController : BaseController
     {
-
         private IUserRepository _userRepository;
         private AuthOptions _authOptions;
 
@@ -37,7 +36,7 @@ namespace SocialMedia.API.Controllers
                 var user = await _userRepository.GetByEmail(payload.Email);
                 if (user == null)
                 {
-                    user = new User
+                    user = new UserEntity
                     {
                         Email = payload.Email,
                         FirstName = payload.GivenName,
@@ -61,7 +60,7 @@ namespace SocialMedia.API.Controllers
             }
         }
 
-        private string CreateToken(User user)
+        private string CreateToken(UserEntity user)
         {
             var claims = new List<Claim>() {
                 new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString())

@@ -7,8 +7,8 @@ namespace SocialMedia.Application.MapperProfiles
     {
         public ProfilesMapper()
         {
-            CreateMap<Profile, ProfileDto>().ReverseMap();
-            CreateMap<Profile, ProfileProtectedDto>();
+            CreateMap<ProfileEntity, ProfileDto>().ReverseMap();
+            CreateMap<ProfileEntity, ProfileProtectedDto>();
         }
     }
 }

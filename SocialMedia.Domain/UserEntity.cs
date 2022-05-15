@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMedia.Domain
 {
-    public class User : BaseEntity
+    [Table("Users")]
+    public class UserEntity : BaseEntity
     {
         [Key]
         public Guid UserId { get; set; }
@@ -16,6 +18,6 @@ namespace SocialMedia.Domain
         public string? LastName { get; set; }
         public string? Token { get; set; }
 
-        public Profile? Profile { get; set; }
+        public ProfileEntity? Profile { get; set; }
     }
 }

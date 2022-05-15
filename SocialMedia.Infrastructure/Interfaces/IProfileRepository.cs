@@ -2,11 +2,11 @@
 
 namespace SocialMedia.Infrastructure.Interfaces
 {
-    public interface IProfileRepository : IRepository<Profile>
+    public interface IProfileRepository : IRepository<ProfileEntity>
     {
-        public Task<Profile?> GetByUser(User user);
-        public Task<Profile?> GetByUserId(string id);
-        public Task<bool> IsExists(User user);
+        public Task<ProfileEntity?> GetByUser(UserEntity user);
+        public Task<ProfileEntity?> GetByUserId(string id);
+        public Task<bool> IsExists(UserEntity user);
 
     }
 }

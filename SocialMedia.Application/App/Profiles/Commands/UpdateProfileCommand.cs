@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using SocialMedia.Application.App.Profiles.Responses;
+using SocialMedia.Domain;
 using SocialMedia.Infrastructure.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
@@ -58,7 +59,7 @@ namespace SocialMedia.Application.App.Profiles.Commands
             var profile = await _profileRepository.GetByUser(user);
             if (profile == null)
             {
-                profile = _mapper.Map<Domain.Profile>(request);
+                profile = _mapper.Map<ProfileEntity>(request);
                 profile.User = user;
 
                 _profileRepository.Add(profile);
