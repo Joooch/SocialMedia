@@ -6,7 +6,6 @@ namespace SocialMedia.Domain
     [Table("Posts")]
     public class PostEntity : BaseEntity
     {
-        [Key]
         public Guid PostId;
 
 
