@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialMedia.Domain;
+using SocialMedia.Infrastructure.Configurations;
 
 namespace SocialMedia.Infrastructure
 {
@@ -23,37 +24,9 @@ namespace SocialMedia.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<UserEntity>()
-                .Property(x => x.Email)
-                .IsUnicode(true);
 
-
-
-            modelBuilder.Entity<LikePairEntity>()
-                .HasKey(x => x.PostId);
-
-            modelBuilder.Entity<LikePairEntity>()
-                .HasOne(x=>x.Post)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<PostEntity>()
-                .HasKey(c => c.PostId);
-
-
-            modelBuilder.Entity<FriendsPairEntity>()
-                .HasOne(x => x.User)
-                .WithMany()
-                .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<FriendsPairEntity>()
-                .HasOne(p => p.Friend)
-                .WithMany()
-                .HasForeignKey(p => p.FriendId)
-                .OnDelete(DeleteBehavior.Restrict);
-            //modelBuilder.Entity<User>().HasOne(x => x.Profile).WithOne(x=>x.Owner);
-            //modelBuilder.Entity<User>().HasOne(x => x.Profile);
+            var configAssembly = typeof(UserEntityConfig).Assembly;
+            modelBuilder.ApplyConfigurationsFromAssembly(configAssembly);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Friends");
+                    b.ToTable("Friends", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.ImageEntity", b =>
@@ -56,7 +56,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("ImageEntity");
+                    b.ToTable("ImageEntity", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.LikePairEntity", b =>
@@ -71,7 +71,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.PostEntity", b =>
@@ -97,7 +97,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("UserOwnerUserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.ProfileEntity", b =>
@@ -137,7 +137,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.UserEntity", b =>
@@ -163,7 +163,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.FriendsPairEntity", b =>
