@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SocialMedia.Domain
 {
     [Table("Likes")]
-    public class LikePairEntity : BaseEntity
+    public class LikeEntity : BaseEntity
     {
         [ForeignKey(nameof(Post))]
         public Guid PostId { get; set; }

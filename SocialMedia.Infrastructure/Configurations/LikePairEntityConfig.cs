@@ -4,9 +4,9 @@ using SocialMedia.Domain;
 
 namespace SocialMedia.Infrastructure.Configurations
 {
-    public class LikePairEntityConfig : IEntityTypeConfiguration<LikePairEntity>
+    public class LikePairEntityConfig : IEntityTypeConfiguration<LikeEntity>
     {
-        public void Configure(EntityTypeBuilder<LikePairEntity> builder)
+        public void Configure(EntityTypeBuilder<LikeEntity> builder)
         {
             builder.HasKey(x => x.PostId);
 

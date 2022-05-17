@@ -9,7 +9,7 @@ namespace SocialMedia.Infrastructure
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<ProfileEntity> Profiles { get; set; }
         public DbSet<FriendsPairEntity> Friends { get; set; }
-        public DbSet<LikePairEntity> Likes { get; set; }
+        public DbSet<LikeEntity> Likes { get; set; }
         public DbSet<PostEntity> Posts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
