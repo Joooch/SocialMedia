@@ -64,7 +64,7 @@ export function AuthProvider({
             console.log("null token");
         }
     }, [cookies.Token, user])
-    useEffect(login, [cookies.Token, login]);
+    useEffect(login, [cookies.Token]);
 
 
     const loginGoogle = useCallback(async (token: string) => {
