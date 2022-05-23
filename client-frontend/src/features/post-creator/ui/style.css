@@ -1,0 +1,21 @@
+.post-creator-fake {
+    text-align: center;
+    display: block;
+}
+
+.post-creator-fake img {
+    margin-top: 10px;
+}
+
+.post-creator-popup {
+    width: 600px;
+    padding: 10px;
+}
+
+.post-creator-popup .header {
+    text-align: center;
+}
+
+.post-creator-popup .content {
+    
+}

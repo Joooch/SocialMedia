@@ -13,6 +13,8 @@ export type UserFull = User & {
 
 export type Post = {
     id: string;
-    title: string;
+    createdAt: Date;
     content: string;
+    userOwner: User;
+    images: string[];
 }

@@ -22,27 +22,34 @@ const Routes = () => {
 }
 
 function PageLayout() {
-  return <div className="center-content">
-    {/* <Grid container wrap='nowrap' justifyContent="space-evenly" xl={9}>
-      <Grid item whiteSpace="nowrap" xs sx={{ mr: 4, display: { xs: 'none', md: 'none', lg: "block" } }}>
-        <LeftNavigationBar />
-      </Grid>
-
-      <Grid item xs={9}>
+  return (
+    <div className="center-content">
+      <Container maxWidth="md">
         <Routes />
-      </Grid>
+      </Container>
+      
+      {/* <Grid container wrap='nowrap' justifyContent="space-evenly" xl={9}>
+        <Grid item whiteSpace="nowrap" xs sx={{ mr: 4, display: { xs: 'none', md: 'none', lg: "block" } }}>
+          <LeftNavigationBar />
+        </Grid>
 
-    </Grid> */}
-    <Container>
-      <Routes />
-    </Container>
+        <Grid item xs={9}>
+          <Routes />
+        </Grid>
 
-  </div>
+      </Grid> */}
+    </div>
+  )
 }
 
 function LoggedPage(props: { veryfied: boolean }) {
   if (props.veryfied) {
-    return <BrowserRouter> <NavigationTopBar /> <PageLayout /> </BrowserRouter>
+    return (
+      <BrowserRouter>
+        <NavigationTopBar />
+        <PageLayout />
+      </BrowserRouter>
+    )
   } else {
     return <ProfileSetupPage />
   }

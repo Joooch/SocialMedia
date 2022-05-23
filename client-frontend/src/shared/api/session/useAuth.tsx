@@ -52,7 +52,6 @@ export function AuthProvider({
                     setLogged(res.email);
                 })
                 .catch((_error) => {
-                    console.log('error')
                     setLogged(undefined);
                 })
                 .finally(() => {
@@ -61,7 +60,6 @@ export function AuthProvider({
                 });
         } else {
             setLoading(false)
-            console.log("null token");
         }
     }, [cookies.Token, user])
     useEffect(login, [cookies.Token]);

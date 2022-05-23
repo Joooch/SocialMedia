@@ -14,3 +14,11 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
+.feed {
+  display: block;
+}
+
+.feed .postCard {
+  margin-top: 10px;
+}
