@@ -31,7 +31,7 @@ namespace SocialMedia.API.Controllers
         }
 
         [HttpPut("image")]
-        public async Task<BookSuccessImageUpdateDto> UpdateImage(IFormFile file)
+        public async Task<ProfileImageUpdateDto> UpdateImage(IFormFile file)
         {
             var userId = HttpContext.User.GetUserId();
             var rootPath = _appEnv.ContentRootPath;
@@ -48,7 +48,7 @@ namespace SocialMedia.API.Controllers
         [HttpGet("{userId}")]
         public async Task<ProfileProtectedDto> GetById(string userId)
         {
-            var profileDto = await _mediator.Send(new GetProfileByUserIdQuery() { UserId = userId });
+            var profileDto = await _mediator.Send(new GetProfileByUserIdQuery() { UserId = Guid.Parse(userId) });
             if (profileDto is null)
             {
                 throw new InvalidUserException(userId);

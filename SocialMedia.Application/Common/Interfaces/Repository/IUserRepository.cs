@@ -1,6 +1,6 @@
 ﻿using SocialMedia.Domain;
 
-namespace SocialMedia.Infrastructure.Interfaces
+namespace SocialMedia.Application.Common.Interfaces.Repository
 {
     public interface IUserRepository : IRepository<UserEntity>
     {

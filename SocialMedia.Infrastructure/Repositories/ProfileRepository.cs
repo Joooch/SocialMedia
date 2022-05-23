@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialMedia.Application.Common.Interfaces.Repository;
 using SocialMedia.Domain;
-using SocialMedia.Infrastructure.Interfaces;
 
 namespace SocialMedia.Infrastructure.Repositories
 {
@@ -13,9 +13,9 @@ namespace SocialMedia.Infrastructure.Repositories
         {
             return EntitySet.FirstOrDefaultAsync(x => x.User == user);
         }
-        public Task<ProfileEntity?> GetByUserId(string id)
+        public Task<ProfileEntity?> GetByUserId(Guid id)
         {
-            return EntitySet.FirstOrDefaultAsync(x => x.UserId.ToString() == id);
+            return EntitySet.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<bool> IsExists(UserEntity user)

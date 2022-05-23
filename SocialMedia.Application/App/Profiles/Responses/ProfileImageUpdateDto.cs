@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Application.App.Profiles.Responses
 {
-    public class BookSuccessImageUpdateDto
+    public class ProfileImageUpdateDto
     {
         public string FilePath { get; set; }
     }

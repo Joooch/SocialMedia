@@ -1,5 +1,5 @@
-﻿using SocialMedia.Domain;
-using SocialMedia.Infrastructure.Interfaces;
+﻿using SocialMedia.Application.Common.Interfaces.Repository;
+using SocialMedia.Domain;
 
 namespace SocialMedia.Infrastructure.Repositories
 {
@@ -16,12 +16,12 @@ namespace SocialMedia.Infrastructure.Repositories
 
         public Task<UserEntity?> GetById(string id)
         {
-            return Get(x => x.UserId.ToString() == id);
+            return Get(x => x.Id.ToString() == id);
         }
 
         public Task<UserEntity?> GetById(Guid id)
         {
-            return Get(x => x.UserId == id);
+            return Get(x => x.Id == id);
         }
 
         public Task<bool> IsConfirmed(UserEntity user)

@@ -4,18 +4,18 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
 using SocialMedia.Application.App.Profiles.Responses;
-using SocialMedia.Infrastructure.Interfaces;
+using SocialMedia.Application.Common.Interfaces.Repository;
 
 namespace SocialMedia.Application.App.Profiles.Commands
 {
-    public class UpdateProfileImageCommand : IRequest<BookSuccessImageUpdateDto>
+    public class UpdateProfileImageCommand : IRequest<ProfileImageUpdateDto>
     {
         public IFormFile FileForm { get; set; }
         public Guid UserId { get; set; }
         public string RootPath { get; set; }
     }
 
-    public class UpdateProfileImageCommandHandler : IRequestHandler<UpdateProfileImageCommand, BookSuccessImageUpdateDto>
+    public class UpdateProfileImageCommandHandler : IRequestHandler<UpdateProfileImageCommand, ProfileImageUpdateDto>
     {
         private readonly IUserRepository _userRepository;
 
@@ -24,7 +24,7 @@ namespace SocialMedia.Application.App.Profiles.Commands
             _userRepository = userRepository;
         }
 
-        public async Task<BookSuccessImageUpdateDto> Handle(UpdateProfileImageCommand request, CancellationToken cancellationToken)
+        public async Task<ProfileImageUpdateDto> Handle(UpdateProfileImageCommand request, CancellationToken cancellationToken)
         {
             var userId = request.UserId;
             var user = await _userRepository.GetById(request.UserId);
@@ -49,10 +49,10 @@ namespace SocialMedia.Application.App.Profiles.Commands
                 Mode = ResizeMode.Crop,
                 Position = AnchorPositionMode.Center
             }));
-            image.SaveAsWebp(fullPath);
+            await image.SaveAsWebpAsync(fullPath);
 
 
-            return new BookSuccessImageUpdateDto()
+            return new ProfileImageUpdateDto()
             {
                 FilePath = publicPath
             };

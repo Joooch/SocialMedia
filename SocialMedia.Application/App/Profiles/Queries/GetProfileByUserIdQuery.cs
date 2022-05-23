@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
 using SocialMedia.Application.App.Profiles.Responses;
-using SocialMedia.Infrastructure.Interfaces;
+using SocialMedia.Application.Common.Interfaces.Repository;
 
 namespace SocialMedia.Application.App.Profiles.Queries
 {
     public class GetProfileByUserIdQuery : IRequest<ProfileProtectedDto?>
     {
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 
     public class GetProfileByUserIdQueryyHandler : IRequestHandler<GetProfileByUserIdQuery, ProfileProtectedDto?>

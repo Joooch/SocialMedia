@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia.API.Extensions;
+using SocialMedia.Application.Common.Interfaces.Repository;
 using SocialMedia.Domain;
-using SocialMedia.Infrastructure.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -63,7 +63,7 @@ namespace SocialMedia.API.Controllers
         private string CreateToken(UserEntity user)
         {
             var claims = new List<Claim>() {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString())
+                new Claim(AuthOptions.ClientClaimId, user.Id.ToString())
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor

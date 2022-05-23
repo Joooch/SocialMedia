@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using SocialMedia.Application.App.Profiles.Responses;
+using SocialMedia.Application.Common.Interfaces.Repository;
 using SocialMedia.Domain;
-using SocialMedia.Infrastructure.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace SocialMedia.Application.App.Profiles.Commands

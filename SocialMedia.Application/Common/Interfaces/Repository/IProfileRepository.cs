@@ -1,11 +1,11 @@
 ﻿using SocialMedia.Domain;
 
-namespace SocialMedia.Infrastructure.Interfaces
+namespace SocialMedia.Application.Common.Interfaces.Repository
 {
     public interface IProfileRepository : IRepository<ProfileEntity>
     {
         public Task<ProfileEntity?> GetByUser(UserEntity user);
-        public Task<ProfileEntity?> GetByUserId(string id);
+        public Task<ProfileEntity?> GetByUserId(Guid id);
         public Task<bool> IsExists(UserEntity user);
 
     }

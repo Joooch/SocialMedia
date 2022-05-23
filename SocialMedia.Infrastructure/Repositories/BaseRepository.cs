@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SocialMedia.Application.Common.Interfaces.Repository;
 using SocialMedia.Domain;
-using SocialMedia.Infrastructure.Interfaces;
 using System.Linq.Expressions;
 
 namespace SocialMedia.Infrastructure.Repositories

@@ -2,7 +2,7 @@
 using MediatR;
 using SocialMedia.Application.App.Profiles.Responses;
 using SocialMedia.Application.App.Users.Responses;
-using SocialMedia.Infrastructure.Interfaces;
+using SocialMedia.Application.Common.Interfaces.Repository;
 
 namespace SocialMedia.Application.App.Users.Queries
 {
