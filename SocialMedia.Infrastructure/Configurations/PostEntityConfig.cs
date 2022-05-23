@@ -8,7 +8,16 @@ namespace SocialMedia.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<PostEntity> builder)
         {
-            builder.HasKey(c => c.PostId);
+            builder.HasKey(c => c.Id);
+
+            builder.HasOne(c => c.UserOwner)
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            /*builder.HasOne(c => c.UserOwner)
+                .WithOne()
+                .HasForeignKey<PostEntity>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);*/
         }
     }
 }

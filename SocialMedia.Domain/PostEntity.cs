@@ -6,17 +6,15 @@ namespace SocialMedia.Domain
     [Table("Posts")]
     public class PostEntity : BaseEntity
     {
-        public Guid PostId;
+        public DateTime CreatedAt { get; set; }
 
-
-        [Required, MinLength(2), MaxLength(200)]
-        public string Title { get; set; }
 
         [Required, MinLength(2), MaxLength(1024 * 4)]
         public string Content { get; set; }
 
-        public ICollection<ImageEntity> Images { get; set; }
+        public ICollection<ImageEntity>? Images { get; set; }
 
-        public UserEntity UserOwner { get; set; }
+        public Guid UserId { get; set; }
+        public ProfileEntity UserOwner { get; set; }
     }
 }

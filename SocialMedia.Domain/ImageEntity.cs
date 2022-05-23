@@ -5,12 +5,14 @@ namespace SocialMedia.Domain
 {
     public class ImageEntity : BaseEntity
     {
-        [Key]
-        public Guid ImageId { get; set; }
-
-
         [ForeignKey(nameof(Post))]
-        public Guid PostId { get; set; }
-        public PostEntity Post { get; set; }
+        public Guid? PostId { get; set; }
+        public PostEntity? Post { get; set; }
+
+        
+        [ForeignKey(nameof(Owner))]
+        public Guid OwnerId { get; set; }
+        public ProfileEntity Owner { get; set; }
+
     }
 }

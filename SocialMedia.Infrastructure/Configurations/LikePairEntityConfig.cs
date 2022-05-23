@@ -8,7 +8,7 @@ namespace SocialMedia.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<LikeEntity> builder)
         {
-            builder.HasKey(x => x.PostId);
+            builder.HasKey(x => x.Id);
 
             builder.HasOne(x => x.Post)
                 .WithMany()
