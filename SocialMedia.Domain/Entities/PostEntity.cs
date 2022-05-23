@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SocialMedia.Domain.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SocialMedia.Domain
+namespace SocialMedia.Domain.Entities
 {
     [Table("Posts")]
-    public class PostEntity : BaseEntity
+    public class PostEntity : BaseEntity, ITimedEntity
     {
         public DateTime CreatedAt { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿using SocialMedia.Application.App.Profiles.Responses;
-using SocialMedia.Domain;
+using SocialMedia.Domain.Entities;
 
 namespace SocialMedia.Application.App.Posts.Responses
 {

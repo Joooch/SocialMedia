@@ -1,4 +1,4 @@
-﻿using SocialMedia.Domain;
+﻿using SocialMedia.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using SocialMedia.Domain;
+using SocialMedia.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace SocialMedia.Application.Common.Interfaces.Repository

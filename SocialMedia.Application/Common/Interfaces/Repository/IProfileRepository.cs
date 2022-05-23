@@ -1,4 +1,4 @@
-﻿using SocialMedia.Domain;
+﻿using SocialMedia.Domain.Entities;
 
 namespace SocialMedia.Application.Common.Interfaces.Repository
 {

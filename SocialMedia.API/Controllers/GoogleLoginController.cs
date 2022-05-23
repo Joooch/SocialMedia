@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia.API.Extensions;
 using SocialMedia.Application.Common.Interfaces.Repository;
-using SocialMedia.Domain;
+using SocialMedia.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

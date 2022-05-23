@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Common.Interfaces.Repository;
-using SocialMedia.Domain;
+using SocialMedia.Domain.Entities;
 
 namespace SocialMedia.Infrastructure.Repositories
 {

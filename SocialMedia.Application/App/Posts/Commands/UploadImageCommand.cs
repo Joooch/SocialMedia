@@ -6,7 +6,7 @@ using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
 using SocialMedia.Application.App.Posts.Responses;
 using SocialMedia.Application.Common.Interfaces.Repository;
-using SocialMedia.Domain;
+using SocialMedia.Domain.Entities;
 
 namespace SocialMedia.Application.App.Posts.Commands
 {

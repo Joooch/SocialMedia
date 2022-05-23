@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialMedia.Domain
+namespace SocialMedia.Domain.Interfaces
 {
-    public class DomainAssembly
+    public interface ITimedEntity
     {
+        public DateTime CreatedAt { get; set; }
     }
 }

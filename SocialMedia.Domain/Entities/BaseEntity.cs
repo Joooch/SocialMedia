@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialMedia.Domain
+namespace SocialMedia.Domain.Entities
 {
     public class BaseEntity
     {

@@ -3,7 +3,7 @@ using SocialMedia.Application.App.Posts.Commands;
 using SocialMedia.Application.App.Posts.Responses;
 using SocialMedia.Application.App.Profiles.Commands;
 using SocialMedia.Application.App.Profiles.Responses;
-using SocialMedia.Domain;
+using SocialMedia.Domain.Entities;
 
 namespace SocialMedia.Application.MapperProfiles
 {

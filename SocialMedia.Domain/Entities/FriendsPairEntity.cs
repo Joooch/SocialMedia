@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SocialMedia.Domain
+namespace SocialMedia.Domain.Entities
 {
     [Table("Friends")]
     public class FriendsPairEntity : BaseEntity

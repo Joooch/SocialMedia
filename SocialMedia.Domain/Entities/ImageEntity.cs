@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SocialMedia.Domain
+namespace SocialMedia.Domain.Entities
 {
     public class ImageEntity : BaseEntity
     {
@@ -13,6 +13,5 @@ namespace SocialMedia.Domain
         [ForeignKey(nameof(Owner))]
         public Guid OwnerId { get; set; }
         public ProfileEntity Owner { get; set; }
-
     }
 }
