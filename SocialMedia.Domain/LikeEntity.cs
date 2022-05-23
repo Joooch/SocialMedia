@@ -13,6 +13,6 @@ namespace SocialMedia.Domain
 
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
-        public UserEntity User { get; set; }
+        public ProfileEntity User { get; set; }
     }
 }

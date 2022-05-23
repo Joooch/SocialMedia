@@ -6,8 +6,6 @@ namespace SocialMedia.Domain
     [Table("Users")]
     public class UserEntity : BaseEntity
     {
-        [Key]
-        public Guid UserId { get; set; }
 
         [Required]
         public string Email { get; set; }

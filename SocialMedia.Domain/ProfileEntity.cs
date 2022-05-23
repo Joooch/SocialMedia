@@ -6,9 +6,6 @@ namespace SocialMedia.Domain
     [Table("Profiles")]
     public class ProfileEntity : BaseEntity
     {
-        [Key, ForeignKey(nameof(User))]
-        public Guid UserId { get; set; }
-
         public UserEntity User { get; set; }
 
 
