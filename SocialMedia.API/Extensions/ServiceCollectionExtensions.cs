@@ -14,6 +14,8 @@ namespace SocialMedia.API.Extensions
         public string Audience = "SocialMediaClient"; // потребитель токена
         public int LIFETIME = 60; // время жизни токена - 1 минута
 
+        public static string ClientClaimId = "clientid";
+
         public TokenValidationParameters TokenValidation;
         public string Key { get; private set; }
         public SymmetricSecurityKey SymmetricSecurityKey { get => new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Key)); }

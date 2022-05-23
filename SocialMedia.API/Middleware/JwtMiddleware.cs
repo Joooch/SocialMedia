@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SocialMedia.API.Extensions;
-using SocialMedia.Infrastructure.Interfaces;
+using SocialMedia.Application.Common.Interfaces.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -34,14 +34,14 @@ namespace SocialMedia.API.Middleware
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
 
-                var userId = jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.NameId).Value;
+                var userId = jwtToken.Claims.First(x => x.Type == AuthOptions.ClientClaimId).Value;
 
                 var user = await repository.GetById(userId);
                 if (user != null)
                 {
                     var identity = new ClaimsIdentity(new List<Claim>()
                     {
-                        new Claim(JwtRegisteredClaimNames.NameId, userId)
+                        new Claim(AuthOptions.ClientClaimId, userId)
                     }, "basic");
                     context.User = new ClaimsPrincipal(identity);
                 }

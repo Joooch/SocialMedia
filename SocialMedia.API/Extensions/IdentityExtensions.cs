@@ -18,7 +18,7 @@ namespace SocialMedia.API.Extensions
 
         public static Guid GetUserId(this ClaimsPrincipal user)
         {
-            var userId = user.FindFirst(JwtRegisteredClaimNames.NameId)!.Value;
+            var userId = user.FindFirst(AuthOptions.ClientClaimId)!.Value;
             return new Guid(userId);
         }
     }
