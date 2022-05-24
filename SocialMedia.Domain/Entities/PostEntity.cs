@@ -14,6 +14,7 @@ namespace SocialMedia.Domain.Entities
         public string Content { get; set; }
 
         public ICollection<ImageEntity>? Images { get; set; }
+        public ICollection<CommentEntity>? Comments { get; set; }
 
         public Guid UserId { get; set; }
         public ProfileEntity UserOwner { get; set; }

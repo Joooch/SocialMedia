@@ -6,13 +6,13 @@ using SocialMedia.Application.Common.Models;
 
 namespace SocialMedia.Application.App.Posts.Queries
 {
-    public class GetFeedQuery : IRequest<IList<PostDto>>
+    public class GetFeedQuery : IRequest<PaginatedResult<PostDto>>
     {
         public Guid UserId { get; set; }
         public PagedRequest? PageInfo { get; set; }
     }
 
-    public class GetFeedQueryHandler : IRequestHandler<GetFeedQuery, IList<PostDto>>
+    public class GetFeedQueryHandler : IRequestHandler<GetFeedQuery, PaginatedResult<PostDto>>
     {
         private readonly IPostsRepository _postsRepository;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace SocialMedia.Application.App.Posts.Queries
             _mapper = mapper;
         }
 
-        public async Task<IList<PostDto>> Handle(GetFeedQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<PostDto>> Handle(GetFeedQuery request, CancellationToken cancellationToken)
         {
             /*var posts = await _postsRepository.GetPostsByUserId(request.UserId, new PagedRequest()
             {
@@ -32,7 +32,7 @@ namespace SocialMedia.Application.App.Posts.Queries
             var page = request.PageInfo ?? new PagedRequest() { PageSize = 10 };
             var posts = await _postsRepository.GetPostsByUserId(request.UserId, page);
 
-            return _mapper.Map<IList<PostDto>>(posts);
+            return posts;//_mapper.Map<IList<PostDto>>(posts);
         }
     }
 }

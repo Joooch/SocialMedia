@@ -31,8 +31,8 @@ namespace SocialMedia.API.Controllers
         }
 
 
-        [HttpGet("GetFeed")]
-        public async Task<IList<PostDto>> GetFeed([FromQuery] PagedRequest? page)
+        [HttpPost("GetFeed")]
+        public async Task<PaginatedResult<PostDto>> GetFeed(PagedRequest page)
         {
             var posts = await _mediator.Send(new GetFeedQuery()
             {

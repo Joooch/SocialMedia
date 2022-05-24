@@ -47,7 +47,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.FriendsPairEntity", b =>
@@ -68,7 +68,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Friends");
+                    b.ToTable("Friends", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.ImageEntity", b =>
@@ -89,7 +89,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.LikeEntity", b =>
@@ -110,7 +110,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostEntity", b =>
@@ -134,7 +134,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.ProfileEntity", b =>
@@ -174,7 +174,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.UserEntity", b =>
@@ -200,7 +200,7 @@ namespace SocialMedia.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.CommentEntity", b =>

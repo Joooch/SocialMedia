@@ -1,17 +1,18 @@
 import * as api from 'shared/api/apiRequest'
-import { Post } from '../types';
+import { PaginatedResult, Post } from '../types';
 
-export type pageDto = {
+export type pagedRequestDto = {
+    offset?: Date;
+    page?: number;
     pageSize: number;
-    lastId?: string;
 }
 
 export type uploadedImageDto = {
     imageId: string;
 }
 
-export async function getFeed(page: pageDto) {
-    let response = await api.get<Post[]>("/api/posts/getFeed", { params: page });
+export async function getFeed(pageData: pagedRequestDto) {
+    let response = await api.post<PaginatedResult<Post>>("/api/posts/getFeed", pageData);
     return response.data;
 }
 

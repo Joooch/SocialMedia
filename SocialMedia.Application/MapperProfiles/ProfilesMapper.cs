@@ -21,6 +21,8 @@ namespace SocialMedia.Application.MapperProfiles
             CreateMap<CreatePostRequest, PostEntity>().ForMember(c => c.Images, c => c.Ignore());
 
             CreateMap<ImageEntity, UploadedImageDto>().ForMember(c => c.ImageId, c => c.MapFrom(c => c.Id));
+
+            CreateMap<Guid, string>().ConvertUsing(c => c.ToString());
         }
     }
 }

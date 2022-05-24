@@ -18,3 +18,11 @@ export type Post = {
     userOwner: User;
     images: string[];
 }
+
+export type PaginatedResult<T> = {
+    offset?: Date;
+    page?: number;
+    pageSize: number;
+    total: number;
+    items: T[];
+}
