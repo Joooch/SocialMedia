@@ -4,6 +4,7 @@ using SocialMedia.Application.Common.Models;
 using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Interfaces;
 using System.Linq.Dynamic.Core;
+using System.Text;
 
 namespace SocialMedia.Application.Extensions
 {
@@ -24,10 +25,15 @@ namespace SocialMedia.Application.Extensions
             }
 
             // fetch some info about the query
-            var total = enumerate ? await source.CountAsync() : 0; // enumerate if needed. it makes no sense to count items on infinite scroll
+            var total = enumerate ? await source.CountAsync() : 0; // enumerate if needed. it makes no sense to count items for infinite scroll
+
+            // project to DTO
+            var projectionResult = mapper.ProjectTo<TDto>(source);
+
+            // filters
+            projectionResult = projectionResult.ApplyFilters(pagedRequest);
 
             // sort
-            var projectionResult = mapper.ProjectTo<TDto>(source);
             projectionResult = projectionResult.ApplySort(pagedRequest);
 
             // do pagination after sort
@@ -45,9 +51,41 @@ namespace SocialMedia.Application.Extensions
             };
         }
 
+        public static IQueryable<T> ApplyFilters<T>(this IQueryable<T> source, PagedRequest pagedRequest)
+        {
+            // TODO: Catch exceptions
+            var requestFilters = pagedRequest.Filters;
+            if (requestFilters == null || requestFilters.Length == 0)
+            {
+                return source;
+            }
+
+            var predicate = new StringBuilder();
+            for (int i = 0; i < requestFilters.Length; i++)
+            {
+                if (i > 0)
+                {
+                    predicate.Append($" AND ");
+                }
+                predicate.Append(requestFilters[i].Path + $".{nameof(string.Contains)}(@{i})");
+            }
+
+            var propertyValues = requestFilters.Select(filter => filter.Value).ToArray();
+
+            source = source.Where(predicate.ToString(), propertyValues);
+
+            return source;
+        }
+
         public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, PagedRequest pagedRequest)
         {
-            return source.OrderBy("CreatedAt", "DESC"); // "ASC"
+            // TODO: Catch exceptions
+            if (pagedRequest.SortKey == null)
+            {
+                return source;
+            }
+
+            return source.OrderBy(pagedRequest.SortKey, pagedRequest.SortDirection);
         }
 
         public static IQueryable<T> ApplyOffset<T>(this IQueryable<T> source, DateTime offset) where T : BaseEntity, ITimedEntity
