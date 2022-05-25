@@ -7,16 +7,33 @@ import { Filter, PaginatedRequest, PaginatedResult, Post } from "shared/models";
 import './index.css'
 
 
-export default function PostsFeed({ defaultFilter }: { defaultFilter?: Filter }) {
+type appendFunction = {
+    (post: Post): void
+}
+export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: { defaultFilter?: Filter, setAppendPost?: (func: appendFunction) => void }) {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>();
-    const [pageData, setPageData] = useState<PaginatedRequest>({ pageSize: 3 });
+    const [pageData, setPageData] = useState<PaginatedRequest>({
+        sortKey: "createdAt",
+        sortDirection: "asc",
+        pageSize: 3,
+        filters: []
+    });
     const [hasMore, setHasMore] = useState<boolean>(true);
 
 
     const nextPageTriggerRef = useRef<HTMLDivElement>(null);
     const observer = useRef<IntersectionObserver>();
 
+    const buildFilters = useCallback(() => {
+        const filters: Filter[] = [];
+
+        if (defaultFilter) {
+            filters.push(defaultFilter);
+        }
+
+        return filters;
+    }, [defaultFilter])
 
     const handlePaginationResponse = useCallback((response: PaginatedResult<Post>) => {
         if (response.items.length === 0) {
@@ -24,11 +41,14 @@ export default function PostsFeed({ defaultFilter }: { defaultFilter?: Filter })
             return
         }
 
-        setPageData({ ...pageData, offset: response.offset });
+        setPageData({
+            ...pageData,
+            offset: response.offset,
+            filters: buildFilters()
+        });
         setPosts([...posts, ...response.items]);
         setLoading(false)
-    }, [pageData, posts]);
-
+    }, [buildFilters, pageData, posts]);
 
     useEffect(() => {
         if (loading || !hasMore) {
@@ -54,14 +74,18 @@ export default function PostsFeed({ defaultFilter }: { defaultFilter?: Filter })
     }, [loading, hasMore, handlePaginationResponse, nextPageTriggerRef, pageData, posts])
 
 
-    const onPostCreated = (post: Post) => {
-        setPosts([post, ...posts])
-    };
+    useEffect(() => {
+        if (!setAppend) { return }
+
+        setAppend((post) => {
+            setPosts([post, ...posts])
+        })
+    })
+
+
 
     return (
         <div className="feed">
-            <PostCreatorFake onPosted={onPostCreated} />
-
             {
                 posts.map((post) => {
                     return (

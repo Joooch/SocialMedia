@@ -1,22 +1,22 @@
 import { Container } from "@mui/material";
 import { fetchProfile } from "entities/profile";
 import ProfileHeader from "entities/profile/ui/profile-header";
+import PostsFeed from "features/posts-feed/ui";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { User } from "shared/models";
+import { Filter, Post, User } from "shared/models";
 
 function ProfilePage() {
-    const [user, setUser] = useState<User>();
-    const [height, setHeight] = useState<number>(64);
-
     const { id } = useParams();
     if (!id) {
         throw new Error("invalid params");
     }
 
+    const [user, setUser] = useState<User>();
+    const [height, setHeight] = useState<number>(64);
+    const profileFilter = useRef<Filter>(new Filter("userOwner.userId", id));
 
 
-    console.log("fetching")
     useEffect(() => {
         fetchProfile(id).then(fetchedUser => {
             setUser(fetchedUser)
@@ -33,11 +33,9 @@ function ProfilePage() {
       }, []); */
 
     return (
-        <Container className='profile-page' sx={{maxHeight: "20px"}}>
+        <Container className='profile-page' sx={{ maxHeight: "20px" }}>
             <ProfileHeader user={user} />
-            <div>
-                Content
-            </div>
+            <PostsFeed defaultFilter={profileFilter.current} />
         </Container>
     );
 }
