@@ -1,6 +1,6 @@
 import { Paper, Skeleton } from "@mui/material";
 import { UserAvatar } from "entities/user";
-import { User } from "shared/api";
+import { User } from "shared/models";
 import './profile-header.css'
 
 export default function ProfileHeader(props: { user?: User }) {
