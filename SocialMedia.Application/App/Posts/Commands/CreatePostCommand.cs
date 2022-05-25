@@ -41,7 +41,7 @@ namespace SocialMedia.Application.App.Posts.Commands
             var owner = (await _profileRepository.GetByUserId(request.UserId))!;
 
             var postEntity = _mapper.Map<PostEntity>(request.Request);
-            postEntity.UserOwner = owner;
+            postEntity.Owner = owner;
             postEntity.CreatedAt = DateTime.Now;
 
             var images = request.Request.Images;

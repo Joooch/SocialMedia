@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SocialMedia.Application.App.Comments.Responses;
 using SocialMedia.Application.App.Posts.Commands;
 using SocialMedia.Application.App.Posts.Responses;
 using SocialMedia.Application.App.Profiles.Commands;
@@ -23,6 +24,8 @@ namespace SocialMedia.Application.MapperProfiles
             CreateMap<ImageEntity, UploadedImageDto>().ForMember(c => c.ImageId, c => c.MapFrom(c => c.Id));
 
             CreateMap<Guid, string>().ConvertUsing(c => c.ToString());
+
+            CreateMap<CommentEntity, CommentDto>();
         }
     }
 }
