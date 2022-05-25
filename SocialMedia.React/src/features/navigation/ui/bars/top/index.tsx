@@ -133,7 +133,7 @@ export function NavigationTopBar() {
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-                                <UserAvatar user={user} size={64}></UserAvatar>
+                                <UserAvatar user={user} size={64} supressLink={true}></UserAvatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
