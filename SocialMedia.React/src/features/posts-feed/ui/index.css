@@ -1,0 +1,7 @@
+.feed {
+    display: block;
+}
+
+.feed .postCard {
+    margin-top: 10px;
+}

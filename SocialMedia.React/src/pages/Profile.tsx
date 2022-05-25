@@ -3,7 +3,7 @@ import { fetchProfile } from "entities/profile";
 import ProfileHeader from "entities/profile/ui/profile-header";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { User } from "shared/api";
+import { User } from "shared/models";
 
 function ProfilePage() {
     const [user, setUser] = useState<User>();

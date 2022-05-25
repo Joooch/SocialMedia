@@ -1,4 +1,4 @@
-import type { User } from 'shared/api/types';
+import { User } from "shared/models";
 
 export interface UserProps {
     user: User,

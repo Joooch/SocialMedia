@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardMedia, Divider, ImageList, ImageListItem } from '@mui/material';
 import { UserAvatar } from 'entities/user';
-import { Link } from 'react-router-dom';
-import type { Post } from 'shared/api/types';
+import { Post } from 'shared/models';
 
 export function PostCard({ post }: { post: Post }) {
     return (
@@ -16,23 +15,26 @@ export function PostCard({ post }: { post: Post }) {
 
             <Divider />
 
-                <CardContent>
-                    {post.content}
-                </CardContent>
-            {
-                <ImageList sx={{ maxHeight: 450 }} cols={3} variant="masonry">
-                    {
-                        post.images.map(id => {
-                            return (
-                                <ImageListItem key={id}>
-                                    <img src={"/img/posts/" + id + ".webp"} key={id} alt="" loading="lazy" />
-                                </ImageListItem>
-                            )
-                        })
-                    }
-                </ImageList>
-            }
-            
+            <CardContent>
+                {post.content}
+                {
+                    post.images.length === 0 ?
+                        <></>
+                        :
+                        <ImageList sx={{ maxHeight: 450 }} cols={3} gap={2} variant="standard">
+                            {
+                                post.images.map(id => {
+                                    return (
+                                        <ImageListItem key={id}>
+                                            <img src={"/img/posts/" + id + ".webp"} key={id} alt="" loading="lazy" />
+                                        </ImageListItem>
+                                    )
+                                })
+                            }
+                        </ImageList>
+                }
+            </CardContent>
+
 
             {/* {titleHref ? <Link to={titleHref}>{data?.title}</Link> : data?.title} */}
 

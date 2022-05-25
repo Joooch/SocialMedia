@@ -1,4 +1,4 @@
-import type { UserFull } from "../types";
+import { UserFull } from 'shared/models';
 import * as api from '../apiRequest'
 
 export type userResponseDto = {

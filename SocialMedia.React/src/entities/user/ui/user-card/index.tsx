@@ -1,2 +1,1 @@
-import type { User } from 'shared/api';
-
+import { User } from 'shared/models'

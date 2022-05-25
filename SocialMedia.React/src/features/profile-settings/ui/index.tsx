@@ -6,8 +6,8 @@ import { UserAvatar } from 'entities/user';
 import SendIcon from '@mui/icons-material/Send';
 import { profileUpdate, ProfileUpdateDto, profileUpdateImage } from 'shared/api/profile'
 import { CircularProgress, TextField } from '@mui/material';
-import { UserFull } from 'shared/api';
 import { Controller, useForm } from 'react-hook-form';
+import { UserFull } from 'shared/models';
 
 /* type ProfileUpdateDto = {
     date?: Date | null,

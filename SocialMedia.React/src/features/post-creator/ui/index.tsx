@@ -1,9 +1,10 @@
 import { Box, Button, Container, Divider, ImageList, ImageListItem, Modal, Paper, TextField } from "@mui/material";
 import { UserAvatar } from "entities/user";
 import { Ref, useEffect, useRef, useState } from "react";
-import { Post, useAuth, User } from "shared/api";
+import { useAuth } from "shared/api";
 import { createPost, uploadImage } from "shared/api/post";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { Post, User } from "shared/models";
 import './style.css';
 
 export function PostCreatorPopupMenu({ user, onPosted }: { user: User, onPosted: (post: Post) => void }) {
@@ -28,28 +29,28 @@ export function PostCreatorPopupMenu({ user, onPosted }: { user: User, onPosted:
 
         setUploading(true);
 
-        try{
+        try {
             const tempList = imageList;
             const filesArray = Array.from(files);
-    
+
             for (let i = 0; i < filesArray.length; i++) {
-                if (tempList.length >= 4) {
+                if (tempList.length >= 3) {
                     break;
                 }
                 const image = filesArray[i]
                 const dto = await uploadImage(image);
-    
+
                 tempList.push(dto.imageId);
                 setImageList(tempList);
             }
         }
-        catch {}
+        catch { }
 
         setUploading(false);
     }
 
     const makePost = async () => {
-        onPosted( await createPost(content ?? "", imageList) );
+        onPosted(await createPost(content ?? "", imageList));
     }
 
 
@@ -110,7 +111,7 @@ export function PostCreatorPopupMenu({ user, onPosted }: { user: User, onPosted:
     )
 }
 
-export function PostCreatorFake( {onPosted}: {onPosted: (post: Post) => void} ) {
+export function PostCreatorFake({ onPosted }: { onPosted: (post: Post) => void }) {
     const [open, setOpen] = useState(false);
     const { user } = useAuth();
 

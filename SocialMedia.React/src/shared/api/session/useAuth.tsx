@@ -8,9 +8,9 @@ import {
     useState,
 } from "react";
 import { getCurrentUser, getTokenByGoogle } from "./lib";
-import type { UserFull } from '../types';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
+import { UserFull } from "shared/models";
 
 interface AuthContextType {
     user?: UserFull;
