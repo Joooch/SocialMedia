@@ -8,5 +8,7 @@ namespace SocialMedia.Application.Common.Interfaces.Repository
     public interface IPostsRepository : IRepository<PostEntity>
     {
         public Task<PaginatedResult<PostDto>> GetPostsByUserId(Guid userId, PagedRequest pagedRequest);
+        public Task<PostEntity?> GetById(Guid postId);
+        public Task<bool> IsExistsById(Guid postId);
     }
 }

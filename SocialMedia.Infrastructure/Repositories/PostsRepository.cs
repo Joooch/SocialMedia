@@ -22,9 +22,19 @@ namespace SocialMedia.Infrastructure.Repositories
             var query = EntitySet;
 
             return await query
-                .Include(c => c.UserOwner)
+                .Include(c => c.Owner)
                 .Include(c => c.Images)
                 .ApplyPaginatedResultAsync<PostEntity, PostDto>(pagedRequest, _mapper);
+        }
+
+        public async Task<PostEntity?> GetById(Guid postId)
+        {
+            return await EntitySet.SingleOrDefaultAsync(c => c.Id == postId);
+        }
+
+        public async Task<bool> IsExistsById(Guid postId)
+        {
+            return await EntitySet.AnyAsync(c => c.Id == postId);
         }
     }
 }

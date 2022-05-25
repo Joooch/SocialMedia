@@ -10,9 +10,9 @@ namespace SocialMedia.Infrastructure.Configurations
         {
             builder.HasKey(c => c.Id);
 
-            builder.HasOne(c => c.UserOwner)
+            builder.HasOne(c => c.Owner)
                 .WithMany()
-                .HasForeignKey(c => c.UserId)
+                .HasForeignKey(c => c.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
             /*builder.HasOne(c => c.UserOwner)
                 .WithOne()
