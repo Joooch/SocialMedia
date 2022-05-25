@@ -4,6 +4,6 @@ export type Post = {
     id: string;
     createdAt: Date;
     content: string;
-    userOwner: User;
+    owner: User;
     images: string[];
 }

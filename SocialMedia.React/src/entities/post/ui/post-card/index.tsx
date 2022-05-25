@@ -7,9 +7,9 @@ export function PostCard({ post }: { post: Post }) {
         <Card className='postCard'>
             <CardHeader
                 avatar={
-                    <UserAvatar user={post.userOwner} size={32} />
+                    <UserAvatar user={post.owner} size={32} />
                 }
-                title={`${post.userOwner.firstName} ${post.userOwner.lastName}`}
+                title={`${post.owner.firstName} ${post.owner.lastName}`}
                 subheader={new Date(post.createdAt).toLocaleString()}
             />
 

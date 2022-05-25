@@ -22,7 +22,7 @@ function ProfilePage() {
             setUser(fetchedUser)
         })
 
-        setProfileFilter(new Filter("userOwner.userId", id));
+        setProfileFilter(new Filter("owner.userId", id));
     }, [id])
 
     /* useEffect(() => {
