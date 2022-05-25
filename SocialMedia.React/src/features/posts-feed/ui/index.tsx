@@ -43,12 +43,11 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
 
         setPageData({
             ...pageData,
-            offset: response.offset,
-            filters: buildFilters()
+            offset: response.offset
         });
         setPosts([...posts, ...response.items]);
         setLoading(false)
-    }, [buildFilters, pageData, posts]);
+    }, [pageData, posts]);
 
     useEffect(() => {
         if (loading || !hasMore) {
@@ -60,6 +59,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
                 setLoading(true);
 
                 pageData.page = pageData.page === undefined ? 0 : pageData.page + 1;
+                pageData.filters = buildFilters();
                 setPageData(pageData)
 
                 getFeed(pageData).then(handlePaginationResponse)
@@ -71,7 +71,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
         }
 
         return () => observer.current?.disconnect();
-    }, [loading, hasMore, handlePaginationResponse, nextPageTriggerRef, pageData, posts])
+    }, [loading, hasMore, handlePaginationResponse, nextPageTriggerRef, pageData, posts, buildFilters])
 
 
     useEffect(() => {
