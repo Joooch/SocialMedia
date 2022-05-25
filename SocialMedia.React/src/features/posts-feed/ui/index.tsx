@@ -35,6 +35,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
         return filters;
     }, [defaultFilter])
 
+
     const handlePaginationResponse = useCallback((response: PaginatedResult<Post>) => {
         if (response.items.length === 0) {
             setHasMore(false)
@@ -48,6 +49,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
         setPosts([...posts, ...response.items]);
         setLoading(false)
     }, [pageData, posts]);
+
 
     useEffect(() => {
         if (loading || !hasMore) {
@@ -80,8 +82,14 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
         setAppend((post) => {
             setPosts([post, ...posts])
         })
-    })
+    }, [posts, setAppend])
 
+
+    useEffect(() => {
+        setLoading(false)
+        setHasMore(true)
+        setPosts([])
+    }, [defaultFilter])
 
 
     return (
