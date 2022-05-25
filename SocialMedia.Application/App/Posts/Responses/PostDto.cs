@@ -8,7 +8,7 @@ namespace SocialMedia.Application.App.Posts.Responses
         public Guid Id { get; set; }
         public string Content { get; set; }
         public ICollection<string>? Images { get; set; }
-        public ProfileProtectedDto UserOwner { get; set; }
+        public ProfileProtectedDto Owner { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
