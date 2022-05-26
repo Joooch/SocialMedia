@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getFeed } from "shared/api/post";
 import { Filter, PaginatedRequest, PaginatedResult, Post } from "shared/models";
 import SearchIcon from '@mui/icons-material/Search';
+import SortIcon from '@mui/icons-material/Sort';
 import './index.css'
 
 
@@ -22,6 +23,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
     const [hasMore, setHasMore] = useState<boolean>(true);
 
     const [searchText, setSearchText] = useState<string>();
+    const [sortByDescending, setSortByDescending] = useState<boolean>(true);
 
     const nextPageTriggerRef = useRef<HTMLDivElement>(null);
     const observer = useRef<IntersectionObserver>();
@@ -70,6 +72,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
 
                 pageData.page = pageData.page === undefined ? 0 : pageData.page + 1;
                 pageData.filters = buildFilters();
+                pageData.sortDirection = sortByDescending ? "DESC" : "ASC";
                 setPageData(pageData)
 
                 getFeed(pageData).then(handlePaginationResponse)
@@ -118,11 +121,26 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
         console.log(pageData)
     }, [pageData, buildFilters])
 
+    useEffect(() => {
+        setPageData({
+            ...pageData,
+            page: undefined,
+            filters: buildFilters()
+        })
+
+        setLoading(false)
+        setHasMore(true)
+        setPosts([])
+    }, [sortByDescending])
+
 
     return (
         <div className="feed">
             <Box color={"primary.main"}>
                 <div className="search-bar" hidden={posts.length === 0}>
+                    <div className="search-button" onClick={() => setSortByDescending(!sortByDescending)}>
+                        <SortIcon className="search-descending" sx={{ transform: sortByDescending ? "" : "rotate(-180deg)" }} />
+                    </div>
                     <TextField type="text" placeholder="Search" value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyDown={e => { if (e.key === "Enter") doSearch() }} size="small" ></TextField>
                     <div className="search-button" onClick={doSearch}>
                         <SearchIcon />
