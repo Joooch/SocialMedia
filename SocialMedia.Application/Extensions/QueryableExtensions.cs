@@ -10,19 +10,9 @@ namespace SocialMedia.Application.Extensions
 {
     public static class QueryableExtensions
     {
-        public static async Task<PaginatedResult<TDto>> ApplyPaginatedResultAsync<TEntity, TDto>(this IQueryable<TEntity> source, PagedRequest pagedRequest, IMapper mapper, bool enumerate = false) where TEntity : BaseEntity, ITimedEntity
+        public static async Task<PaginatedResult<TDto>> ApplyPaginatedResultAsync<TEntity, TDto>(this IQueryable<TEntity> source, PagedRequest pagedRequest, IMapper mapper, bool enumerate = false) where TEntity : BaseEntity
         {
-            // apply offset
-            DateTime? offset = pagedRequest.Offset;
-            if (offset.HasValue)
-            {
-                source = source.ApplyOffset(offset.Value);
-            }
-            else
-            {
-                // Remember oldest date and save it as offset for next page request
-                offset = await source.MaxAsync(c => (DateTime?)c.CreatedAt);
-            }
+            source = source.ApplyOffset(pagedRequest);
 
             // fetch some info about the query
             var total = enumerate ? await source.CountAsync() : 0; // enumerate if needed. it makes no sense to count items for infinite scroll
@@ -43,7 +33,6 @@ namespace SocialMedia.Application.Extensions
             var resultList = await projectionResult.ToListAsync();
             return new PaginatedResult<TDto>()
             {
-                Offset = offset,
                 Page = pagedRequest.Page,
                 PageSize = pagedRequest.PageSize,
                 Items = resultList,
@@ -95,9 +84,21 @@ namespace SocialMedia.Application.Extensions
             return source.OrderBy(pagedRequest.SortKey + " " + pagedRequest.SortDirection);
         }
 
-        public static IQueryable<T> ApplyOffset<T>(this IQueryable<T> source, DateTime offset) where T : BaseEntity, ITimedEntity
+        public static IQueryable<T> ApplyOffset<T>(this IQueryable<T> source, PagedRequest pagedRequest) where T : BaseEntity
         {
-            return source.Where(c => c.CreatedAt <= offset);
+            if (source.ElementType is not ITimedEntity)
+            {
+                return source;
+            }
+
+            // apply offset
+            DateTime? offset = pagedRequest.Offset;
+            if (offset.HasValue)
+            {
+                return (IQueryable<T>)source.OfType<ITimedEntity>().Where(c => c.CreatedAt <= offset); ;
+            }
+
+            return source;
         }
 
         public static IQueryable<T> ApplyPagination<T>(this IQueryable<T> source, PagedRequest pagedRequest)

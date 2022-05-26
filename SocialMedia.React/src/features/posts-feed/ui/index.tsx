@@ -14,12 +14,15 @@ type appendFunction = {
 export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: { defaultFilter?: Filter, setAppendPost?: (func: appendFunction) => void }) {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>();
-    const [pageData, setPageData] = useState<PaginatedRequest>({
+
+    const [page, setPage] = useState<number | undefined>();
+    const defaultPageRequest = useRef<PaginatedRequest>({
         sortKey: "createdAt",
         sortDirection: "DESC",
         pageSize: 3,
         filters: []
     });
+
     const [hasMore, setHasMore] = useState<boolean>(true);
 
     const [searchText, setSearchText] = useState<string>("");
@@ -52,13 +55,10 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
             return
         }
 
-        setPageData({
-            ...pageData,
-            offset: response.offset
-        });
+        defaultPageRequest.current.offset = new Date();
         setPosts([...posts, ...response.items]);
         setLoading(false)
-    }, [pageData, posts]);
+    }, [posts]);
 
 
     useEffect(() => {
@@ -70,12 +70,17 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
             if (entries[0].isIntersecting && !loading && hasMore) {
                 setLoading(true);
 
-                pageData.page = pageData.page === undefined ? 0 : pageData.page + 1;
-                pageData.filters = buildFilters();
-                pageData.sortDirection = sortByDescending ? "DESC" : "ASC";
-                setPageData(pageData)
+                const nextPage = page === undefined ? 0 : page + 1;
+                setPage(nextPage)
 
-                getFeed(pageData).then(handlePaginationResponse)
+                const request = {
+                    ...defaultPageRequest.current,
+                    sortDirection: sortByDescending ? "DESC" : "ASC",
+                    filters: buildFilters(),
+                    page: nextPage
+                }
+
+                getFeed(request).then(handlePaginationResponse)
             }
         })
 
@@ -84,7 +89,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
         }
 
         return () => observer.current?.disconnect();
-    }, [loading, hasMore, handlePaginationResponse, nextPageTriggerRef, pageData, posts, buildFilters])
+    }, [loading, hasMore, handlePaginationResponse, nextPageTriggerRef, posts, buildFilters])
 
 
     useEffect(() => {
@@ -96,43 +101,18 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
     }, [posts, setAppend])
 
 
-    useEffect(() => {
-        setPageData({
-            ...pageData,
-            page: undefined,
-            filters: buildFilters()
-        })
+    const clearPage = useCallback(() => {
+        setPage(undefined)
 
         setLoading(false)
         setHasMore(true)
         setPosts([])
-    }, [defaultFilter])
+    }, [])
+    useEffect(clearPage, [clearPage, defaultFilter, sortByDescending])
 
     const doSearch = useCallback(() => {
-        setLoading(false)
-        setHasMore(true)
-        setPosts([])
-        setPageData({
-            ...pageData,
-            page: undefined,
-            filters: buildFilters()
-        })
-
-        console.log(pageData)
-    }, [pageData, buildFilters])
-
-    useEffect(() => {
-        setPageData({
-            ...pageData,
-            page: undefined,
-            filters: buildFilters()
-        })
-
-        setLoading(false)
-        setHasMore(true)
-        setPosts([])
-    }, [sortByDescending])
-
+        clearPage( )
+    }, [clearPage])
 
     return (
         <div className="feed">
