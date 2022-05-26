@@ -1,8 +1,9 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress, TextField } from "@mui/material";
 import { PostCard } from "entities/post";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getFeed } from "shared/api/post";
 import { Filter, PaginatedRequest, PaginatedResult, Post } from "shared/models";
+import SearchIcon from '@mui/icons-material/Search';
 import './index.css'
 
 
@@ -14,12 +15,13 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
     const [loading, setLoading] = useState<boolean>();
     const [pageData, setPageData] = useState<PaginatedRequest>({
         sortKey: "createdAt",
-        sortDirection: "asc",
+        sortDirection: "DESC",
         pageSize: 3,
         filters: []
     });
     const [hasMore, setHasMore] = useState<boolean>(true);
 
+    const [searchText, setSearchText] = useState<string>();
 
     const nextPageTriggerRef = useRef<HTMLDivElement>(null);
     const observer = useRef<IntersectionObserver>();
@@ -31,8 +33,15 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
             filters.push(defaultFilter);
         }
 
+        if (searchText) {
+            filters.push({
+                path: "content",
+                value: searchText,
+            })
+        }
+
         return filters;
-    }, [defaultFilter])
+    }, [defaultFilter, searchText])
 
 
     const handlePaginationResponse = useCallback((response: PaginatedResult<Post>) => {
@@ -85,14 +94,42 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
 
 
     useEffect(() => {
+        setPageData({
+            ...pageData,
+            page: undefined,
+            filters: buildFilters()
+        })
+
         setLoading(false)
         setHasMore(true)
         setPosts([])
     }, [defaultFilter])
 
+    const doSearch = useCallback(() => {
+        setLoading(false)
+        setHasMore(true)
+        setPosts([])
+        setPageData({
+            ...pageData,
+            page: undefined,
+            filters: buildFilters()
+        })
+
+        console.log(pageData)
+    }, [pageData, buildFilters])
+
 
     return (
         <div className="feed">
+            <Box color={"primary.main"}>
+                <div className="search-bar" hidden={posts.length === 0}>
+                    <TextField type="text" placeholder="Search" value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyDown={e => { if (e.key === "Enter") doSearch() }} size="small" ></TextField>
+                    <div className="search-button" onClick={doSearch}>
+                        <SearchIcon />
+                    </div>
+                </div>
+            </Box>
+
             {
                 posts.map((post) => {
                     return (

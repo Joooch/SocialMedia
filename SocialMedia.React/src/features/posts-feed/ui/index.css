@@ -5,3 +5,24 @@
 .feed .postCard {
     margin-top: 10px;
 }
+
+.feed .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.search-button {
+    margin-left: 10px;
+    cursor: pointer;
+    display: flex;
+
+    -webkit-transition: all 0.2s 0s ease;
+    -moz-transition: all 0.3s 0s ease;
+    -o-transition: all 0.2s 0s ease;
+    transition: all 0.2s 0s ease;
+}
+
+.search-button:hover {
+    transform: scale(1.3);
+}
