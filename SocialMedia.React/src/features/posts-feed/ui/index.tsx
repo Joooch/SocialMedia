@@ -18,9 +18,9 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
     const [page, setPage] = useState<number | undefined>();
     const defaultPageRequest = useRef<PaginatedRequest>({
         sortKey: "createdAt",
-        sortDirection: "DESC",
         pageSize: 3,
-        filters: []
+        filters: [],
+        offset: new Date()
     });
 
     const [hasMore, setHasMore] = useState<boolean>(true);
@@ -55,7 +55,6 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
             return
         }
 
-        defaultPageRequest.current.offset = new Date();
         setPosts([...posts, ...response.items]);
         setLoading(false)
     }, [posts]);
@@ -75,6 +74,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
 
                 const request = {
                     ...defaultPageRequest.current,
+
                     sortDirection: sortByDescending ? "DESC" : "ASC",
                     filters: buildFilters(),
                     page: nextPage
@@ -111,20 +111,18 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
     useEffect(clearPage, [clearPage, defaultFilter, sortByDescending])
 
     const doSearch = useCallback(() => {
-        clearPage( )
+        clearPage()
     }, [clearPage])
 
     return (
         <div className="feed">
-            <Box color={"primary.main"}>
-                <div className="search-bar" hidden={posts.length === 0}>
-                    <div className="search-button" onClick={() => setSortByDescending(!sortByDescending)}>
-                        <SortIcon className="search-descending" sx={{ transform: sortByDescending ? "" : "rotate(-180deg)" }} />
-                    </div>
-                    <TextField type="text" placeholder="Search" value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyDown={e => { if (e.key === "Enter") doSearch() }} size="small" ></TextField>
-                    <div className="search-button" onClick={doSearch}>
-                        <SearchIcon />
-                    </div>
+            <Box className="search-bar" color={"primary.main"} sx={{visibility: posts.length === 0 ? "hidden" : undefined}}>
+                <div className="search-button" onClick={() => setSortByDescending(!sortByDescending)}>
+                    <SortIcon className="search-descending" sx={{ transform: sortByDescending ? "" : "rotate(-180deg)" }} />
+                </div>
+                <TextField type="text" placeholder="Search" value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyDown={e => { if (e.key === "Enter") doSearch() }} size="small" ></TextField>
+                <div className="search-button" onClick={doSearch}>
+                    <SearchIcon />
                 </div>
             </Box>
 

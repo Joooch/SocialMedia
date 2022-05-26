@@ -1,0 +1,35 @@
+.profile-header {
+    padding: 10px 10px 10px 10px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+    display: block;
+    text-align: center;
+    font-size: large;
+}
+
+.profile-friends {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.profile-friends-button {
+    display: flex;
+    margin-left: 10px;
+    
+    -webkit-transition: all 0.2s 0s ease;
+    -moz-transition: all 0.3s 0s ease;
+    -o-transition: all 0.2s 0s ease;
+    transition: all 0.2s 0s ease;
+}
+
+.profile-friends-button:hover {
+    transform: scale(1.3);
+}
+
+.profile-friends-label {
+    color: white;
+}

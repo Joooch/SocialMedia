@@ -8,12 +8,14 @@ import { useAuth } from 'shared/api/session';
 import ProfileSetupPage from 'pages/ProfileSetup';
 import { CircularProgress, Container } from '@mui/material';
 import { Box } from '@mui/system';
+import FriendsPage from 'pages/FriendsPage';
 
 const Routes = () => {
   let routes = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/settings", element: <ProfileSetupPage /> },
-    { path: "/profile/:id", element: <ProfilePage /> }
+    { path: "/profile/:id", element: <ProfilePage /> },
+    { path: "/profile/:id/friends", element: <FriendsPage /> }
   ])
   return routes;
 }

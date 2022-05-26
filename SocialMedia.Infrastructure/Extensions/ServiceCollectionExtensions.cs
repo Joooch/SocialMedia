@@ -20,6 +20,7 @@ namespace SocialMedia.Infrastructure.Extensions
             services.AddScoped(typeof(IPostsRepository), typeof(PostsRepository));
             services.AddScoped(typeof(IImageRepository), typeof(ImageRepository));
             services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
+            services.AddScoped(typeof(IFriendsRepository), typeof(FriendsRepository));
 
             return services;
         }

@@ -1,0 +1,16 @@
+.user-card {
+    display: flex;
+    font-size: medium;
+}
+
+.user-card .user-avatar {
+    margin-right: 10px;
+}
+
+.user-link {
+    text-decoration: none;
+}
+
+.user-link:active {
+    color: white;
+}

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SocialMedia.Domain.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMedia.Domain.Entities
@@ -8,7 +9,6 @@ namespace SocialMedia.Domain.Entities
     {
         public Guid UserId { get; set; }
         public ProfileEntity User { get; set; }
-
 
         public Guid FriendId { get; set; }
         public ProfileEntity Friend { get; set; }

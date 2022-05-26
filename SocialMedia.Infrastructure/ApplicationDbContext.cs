@@ -13,6 +13,7 @@ namespace SocialMedia.Infrastructure
         public DbSet<PostEntity> Posts { get; set; }
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<ImageEntity> Images { get; set; }
+        public DbSet<FriendsRequestEntity> FriendRequests { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
