@@ -30,8 +30,8 @@ export default function CommentCreator({ postId, onCommentCreated }: { postId: s
 
             <TextField placeholder="Write a comment..." size="small" inputRef={inputRef} onKeyDown={e => { if (e.key === "Enter") handleClick() }} />
             {/* <Button className="comment-button" color="primary" size="small"> </Button> */}
-            <div onClick={handleClick}>
-                <CommentIcon className="comment-icon" color="primary" />
+            <div onClick={handleClick} className="comment-icon">
+                <CommentIcon color="primary" />
             </div>
         </div>
     )

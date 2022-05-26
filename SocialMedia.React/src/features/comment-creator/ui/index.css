@@ -13,4 +13,5 @@
 .comment-icon {
     margin: 6px;
     cursor: pointer;
+    display: flex;
 }
