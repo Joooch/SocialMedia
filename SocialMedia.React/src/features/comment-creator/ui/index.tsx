@@ -1,11 +1,11 @@
 import { TextField } from "@mui/material";
 import CommentIcon from '@mui/icons-material/Comment';
-import './index.css'
 import { useAuth } from "shared/api";
 import { UserAvatar } from "entities/user";
 import { useRef } from "react";
 import { createComment } from "shared/api/comment";
 import { Comment } from "shared/models";
+import './index.css'
 
 export default function CommentCreator({ postId, onCommentCreated }: { postId: string, onCommentCreated?: (comment: Comment) => void }) {
     const inputRef = useRef<HTMLInputElement>();

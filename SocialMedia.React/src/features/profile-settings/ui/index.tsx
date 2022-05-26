@@ -9,15 +9,6 @@ import { CircularProgress, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { UserFull } from 'shared/models';
 
-/* type ProfileUpdateDto = {
-    date?: Date | null,
-    firstName?: string,
-    lastName?: string,
-    address?: string,
-    region?: string,
-    city?: string,
-    country?: string,
-} */
 const maxDate = new Date()
 maxDate.setFullYear(maxDate.getFullYear() - 15);
 

@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import { UserAvatar } from 'entities/user';
 import { Comment } from 'shared/models';
 import './index.css';

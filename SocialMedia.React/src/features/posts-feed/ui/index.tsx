@@ -1,6 +1,5 @@
 import { CircularProgress } from "@mui/material";
 import { PostCard } from "entities/post";
-import { PostCreatorFake } from "features/post-creator";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getFeed } from "shared/api/post";
 import { Filter, PaginatedRequest, PaginatedResult, Post } from "shared/models";

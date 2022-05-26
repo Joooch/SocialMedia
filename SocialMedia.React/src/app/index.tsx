@@ -3,9 +3,7 @@ import { BrowserRouter, useRoutes } from 'react-router-dom';
 import HomePage from 'pages/Home';
 import LoginPage from 'pages/Login';
 import ProfilePage from 'pages/Profile';
-import Grid from '@mui/material/Grid';
 import { NavigationTopBar } from 'features/navigation/ui/bars/top';
-import { LeftNavigationBar } from 'features/navigation/ui/bars/left';
 import { useAuth } from 'shared/api/session';
 import ProfileSetupPage from 'pages/ProfileSetup';
 import { CircularProgress, Container } from '@mui/material';
@@ -16,7 +14,6 @@ const Routes = () => {
     { path: "/", element: <HomePage /> },
     { path: "/settings", element: <ProfileSetupPage /> },
     { path: "/profile/:id", element: <ProfilePage /> }
-    //{ path: "/login", element: <Login /> },
   ])
   return routes;
 }
@@ -27,17 +24,6 @@ function PageLayout() {
       <Container maxWidth="md">
         <Routes />
       </Container>
-
-      {/* <Grid container wrap='nowrap' justifyContent="space-evenly" xl={9}>
-        <Grid item whiteSpace="nowrap" xs sx={{ mr: 4, display: { xs: 'none', md: 'none', lg: "block" } }}>
-          <LeftNavigationBar />
-        </Grid>
-
-        <Grid item xs={9}>
-          <Routes />
-        </Grid>
-
-      </Grid> */}
     </div>
   )
 }

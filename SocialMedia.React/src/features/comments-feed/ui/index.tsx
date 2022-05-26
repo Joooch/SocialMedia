@@ -1,14 +1,9 @@
-import { Paper } from "@mui/material";
 import CommentCard from "entities/comment/ui";
 import CommentCreator from "features/comment-creator/ui";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getFeed } from "shared/api/comment";
-import { Comment, Filter, PaginatedRequest, PaginatedResult, Post } from "shared/models";
+import { Comment, PaginatedRequest, PaginatedResult, Post } from "shared/models";
 import './index.css';
-
-type appendFunction = {
-    (post: Post): void
-}
 
 export default function CommentsFeed({ post }: { post: Post }) {
     const [comments, setComments] = useState<Comment[]>([]);
@@ -56,7 +51,7 @@ export default function CommentsFeed({ post }: { post: Post }) {
 
     const onCommentCreated = useCallback((comment: Comment) => {
         setComments([comment, ...comments])
-        if(total){
+        if (total) {
             setTotal(total + 1)
         }
     }, [comments])

@@ -1,4 +1,4 @@
-import { Paper, Skeleton } from "@mui/material";
+import { Paper } from "@mui/material";
 import { UserAvatar } from "entities/user";
 import { User } from "shared/models";
 import './profile-header.css'

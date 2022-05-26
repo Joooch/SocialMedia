@@ -1,6 +1,6 @@
 import { Box, Button, Container, Divider, ImageList, ImageListItem, Modal, Paper, TextField } from "@mui/material";
 import { UserAvatar } from "entities/user";
-import { Ref, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "shared/api";
 import { createPost, uploadImage } from "shared/api/post";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
