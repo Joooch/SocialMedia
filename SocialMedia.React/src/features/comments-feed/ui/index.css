@@ -1,0 +1,8 @@
+.comments-feed {
+    padding: 0px 12px 10px 10px;
+}
+
+.comments-feed .fetch-button {
+    cursor: pointer;
+    font-style: bold;
+}

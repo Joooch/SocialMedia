@@ -1,0 +1,29 @@
+.comment-card {
+    display: flex;
+    box-shadow: 2px 2px 2px 0.9px;
+    margin-bottom: 10px;
+
+    -webkit-transition: all 0.2s 0s ease;
+    -moz-transition: all 0.3s 0s ease;
+    -o-transition: all 0.2s 0s ease;
+    transition: all 0.2s 0s ease;
+}
+
+.comment-card:hover {
+    transform: scale(1.02);
+}
+
+.comment-card .comment-avatar {
+    display: flex;
+    margin-right: 8px;
+    align-items: center;
+}
+
+.comment-card-header {
+    margin: 0px;
+    font-size: medium;
+}
+
+.comment-card-content {
+    color: white;
+}

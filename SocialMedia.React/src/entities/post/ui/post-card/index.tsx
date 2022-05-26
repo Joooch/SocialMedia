@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardMedia, Divider, ImageList, ImageListItem } from '@mui/material';
 import { UserAvatar } from 'entities/user';
+import CommentsFeed from 'features/comments-feed/ui';
 import { Post } from 'shared/models';
 
 export function PostCard({ post }: { post: Post }) {
@@ -35,6 +36,7 @@ export function PostCard({ post }: { post: Post }) {
                 }
             </CardContent>
 
+            <CommentsFeed post={post} />
 
             {/* {titleHref ? <Link to={titleHref}>{data?.title}</Link> : data?.title} */}
 

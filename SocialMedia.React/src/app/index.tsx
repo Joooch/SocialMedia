@@ -27,7 +27,7 @@ function PageLayout() {
       <Container maxWidth="md">
         <Routes />
       </Container>
-      
+
       {/* <Grid container wrap='nowrap' justifyContent="space-evenly" xl={9}>
         <Grid item whiteSpace="nowrap" xs sx={{ mr: 4, display: { xs: 'none', md: 'none', lg: "block" } }}>
           <LeftNavigationBar />
@@ -45,10 +45,10 @@ function PageLayout() {
 function LoggedPage(props: { veryfied: boolean }) {
   if (props.veryfied) {
     return (
-      <BrowserRouter>
+      <>
         <NavigationTopBar />
         <PageLayout />
-      </BrowserRouter>
+      </>
     )
   } else {
     return <ProfileSetupPage />
@@ -66,12 +66,12 @@ function AppWrapper() {
     )
   } else {
     return (
-      <>
+      <BrowserRouter>
         {!logged
           ? <LoginPage />
           : <LoggedPage veryfied={!!user} />
         }
-      </>
+      </BrowserRouter>
     )
   }
 }
