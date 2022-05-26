@@ -67,7 +67,7 @@ export default function CommentsFeed({ post }: { post: Post }) {
                 })
             }
 
-            <div className="fetch-button" onClick={() => fetchComments(2)} hidden={total !== undefined && total <= comments.length}>
+            <div className="fetch-button" onClick={() => fetchComments(2)} hidden={total === undefined || isNaN(total) || total <= comments.length}>
                 Fetch more ({total! - comments.length})
             </div>
         </div>
