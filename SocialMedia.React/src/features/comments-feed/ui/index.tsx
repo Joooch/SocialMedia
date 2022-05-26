@@ -52,12 +52,18 @@ export default function CommentsFeed({ post }: { post: Post }) {
     useEffect(() => {
         setLoading(false)
         fetchComments(2);
-    }, [])
+    }, [post])
 
+    const onCommentCreated = useCallback((comment: Comment) => {
+        setComments([comment, ...comments])
+        if(total){
+            setTotal(total + 1)
+        }
+    }, [comments])
 
     return (
         <div className="comments-feed">
-            <CommentCreator postId={post.id} />
+            <CommentCreator postId={post.id} onCommentCreated={onCommentCreated} />
             {
                 comments.map((comment) => {
                     return (
