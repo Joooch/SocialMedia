@@ -22,7 +22,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
     });
     const [hasMore, setHasMore] = useState<boolean>(true);
 
-    const [searchText, setSearchText] = useState<string>();
+    const [searchText, setSearchText] = useState<string>("");
     const [sortByDescending, setSortByDescending] = useState<boolean>(true);
 
     const nextPageTriggerRef = useRef<HTMLDivElement>(null);
