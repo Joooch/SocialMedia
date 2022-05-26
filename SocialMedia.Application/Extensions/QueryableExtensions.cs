@@ -92,7 +92,7 @@ namespace SocialMedia.Application.Extensions
                 return source;
             }
 
-            return source.OrderBy(pagedRequest.SortKey, pagedRequest.SortDirection);
+            return source.OrderBy(pagedRequest.SortKey + " " + pagedRequest.SortDirection);
         }
 
         public static IQueryable<T> ApplyOffset<T>(this IQueryable<T> source, DateTime offset) where T : BaseEntity, ITimedEntity
