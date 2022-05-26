@@ -22,11 +22,13 @@ namespace SocialMedia.Application.App.Comments.Commands
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IPostsRepository _postsRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IMapper _mapper;
 
-        public CreateCommentCommandHandler(ICommentRepository commentRepository, IPostsRepository postsRepository, IMapper mapper)
+        public CreateCommentCommandHandler(ICommentRepository commentRepository, IPostsRepository postsRepository, IProfileRepository profileRepository, IMapper mapper)
         {
             _commentRepository = commentRepository;
+            _profileRepository = profileRepository;
             _postsRepository = postsRepository;
             _mapper = mapper;
         }
@@ -42,10 +44,12 @@ namespace SocialMedia.Application.App.Comments.Commands
                 throw new Exception("Post not found");
             }
 
+            var user = await _profileRepository.GetByUserId(command.UserId);
+
             var comment = new CommentEntity
             {
                 Content = request.Content,
-                OwnerId = command.UserId,
+                Owner = user!,
                 CreatedAt = DateTime.Now,
                 PostId = postId
             };

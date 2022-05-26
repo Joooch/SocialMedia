@@ -21,7 +21,7 @@ namespace SocialMedia.Application.Extensions
             else
             {
                 // Remember oldest date and save it as offset for next page request
-                offset = await source.MaxAsync(c => c.CreatedAt);
+                offset = await source.MaxAsync(c => (DateTime?)c.CreatedAt);
             }
 
             // fetch some info about the query
@@ -72,7 +72,14 @@ namespace SocialMedia.Application.Extensions
 
             var propertyValues = requestFilters.Select(filter => filter.Value).ToArray();
 
-            source = source.Where(predicate.ToString(), propertyValues);
+            try
+            {
+                source = source.Where(predicate.ToString(), propertyValues);
+            }
+            catch (Exception ex)
+            {
+                // invalid filter, ignore.
+            }
 
             return source;
         }

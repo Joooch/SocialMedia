@@ -6,6 +6,6 @@ namespace SocialMedia.Application.Common.Interfaces.Repository
 {
     public interface ICommentRepository : IRepository<CommentEntity>
     {
-        public Task<PaginatedResult<CommentDto>> GetCommentsByUserId(Guid userId, PagedRequest pagedRequest);
+        public Task<PaginatedResult<CommentDto>> GetCommentsByUserId(Guid userId, Guid postId, PagedRequest pagedRequest);
     }
 }

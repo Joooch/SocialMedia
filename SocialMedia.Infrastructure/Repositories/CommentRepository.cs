@@ -17,13 +17,14 @@ namespace SocialMedia.Infrastructure.Repositories
             _mapper = mapper;
         }
 
-        public async Task<PaginatedResult<CommentDto>> GetCommentsByUserId(Guid userId, PagedRequest pagedRequest)
+        public async Task<PaginatedResult<CommentDto>> GetCommentsByUserId(Guid userId, Guid postId, PagedRequest pagedRequest)
         {
             var query = EntitySet;
 
             return await query
+                .Where(x => x.PostId == postId)
                 .Include(c => c.Owner)
-                .ApplyPaginatedResultAsync<CommentEntity, CommentDto>(pagedRequest, _mapper);
+                .ApplyPaginatedResultAsync<CommentEntity, CommentDto>(pagedRequest, _mapper, true);
         }
     }
 }

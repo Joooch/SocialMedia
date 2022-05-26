@@ -10,6 +10,6 @@ namespace SocialMedia.Application.App.Comments.Responses
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public ProfileDto Owner { get; set; }
+        public ProfileProtectedDto Owner { get; set; }
     }
 }
