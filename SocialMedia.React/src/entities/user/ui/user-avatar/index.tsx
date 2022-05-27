@@ -37,7 +37,10 @@ export const UserAvatar = (props: { user?: User | string, size?: number | string
 
     if (props.user === undefined) { // render skeleton instead
         return (
-            <Skeleton variant="circular" width={props.size} height={props.size} />
+            <div className='user-avatar'>
+                <Skeleton className='user-avatar' variant="circular" width={props.size} height={props.size} />
+            </div>
+
         )
     }
 

@@ -9,6 +9,11 @@
     font-size: large;
 }
 
+.profile-avatar-center {
+    display: flex;
+    justify-content: center;
+}
+
 .profile-friends {
     display: flex;
     align-items: center;
@@ -19,7 +24,7 @@
 .profile-friends-button {
     display: flex;
     margin-left: 10px;
-    
+
     -webkit-transition: all 0.2s 0s ease;
     -moz-transition: all 0.3s 0s ease;
     -o-transition: all 0.2s 0s ease;

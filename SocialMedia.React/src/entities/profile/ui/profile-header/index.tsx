@@ -30,7 +30,9 @@ export default function ProfileHeader({ user, hideFriendsLabel }: { user?: User,
     return (
         <div className="profile-header">
             <div>
-                <UserAvatar user={user} size={128} />
+                <div className="profile-avatar-center">
+                    <UserAvatar user={user} size={128} />
+                </div>
                 <h1>{user?.firstName} {user?.lastName}</h1>
             </div>
 
