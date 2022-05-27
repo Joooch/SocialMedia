@@ -8,7 +8,6 @@ namespace SocialMedia.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    [CustomExceptionFilter]
     public class BaseController : Controller
     {
         protected Guid GetUserId()

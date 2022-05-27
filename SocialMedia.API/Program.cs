@@ -42,13 +42,16 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/img"
 });
 
-//app.UseCookiePolicy();
+app.UseExceptionMiddleware();
+
 app.UseRouting();
 app.UseMiddleware<JwtMiddleware>();
 app.UseMiddleware<LoggerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseDatabaseTransaction();
 
 app.MapControllers();
 
