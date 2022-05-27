@@ -72,7 +72,7 @@ export function PostCreatorPopupMenu({ user, onPosted }: { user: User, onPosted:
                     onChange={(e) => setContent(e.target.value)}
                 />
 
-                <ImageList sx={{ maxHeight: 450 }} cols={3} variant="masonry">
+                <ImageList sx={{ maxHeight: 450 }} cols={Math.min(imageList.length, 3)} variant="masonry">
                     {
                         imageList.map(id => {
                             return (

@@ -22,7 +22,7 @@ export function PostCard({ post }: { post: Post }) {
                     post.images.length === 0 ?
                         <></>
                         :
-                        <ImageList sx={{ maxHeight: 450 }} cols={3} gap={2} variant="standard">
+                        <ImageList sx={{ maxHeight: 450 }} cols={Math.min(post.images.length, 3)} gap={2} variant="standard">
                             {
                                 post.images.map(id => {
                                     return (
