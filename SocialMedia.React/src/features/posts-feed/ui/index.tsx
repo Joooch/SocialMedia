@@ -116,7 +116,7 @@ export default function PostsFeed({ defaultFilter, setAppendPost: setAppend }: {
 
     return (
         <div className="feed">
-            <Box className="search-bar" color={"primary.main"} sx={{visibility: posts.length === 0 ? "hidden" : undefined}}>
+            <Box className="search-bar" color={"primary.main"} sx={{visibility: (posts.length === 0 && !searchText) ? "hidden" : undefined}}>
                 <div className="search-button" onClick={() => setSortByDescending(!sortByDescending)}>
                     <SortIcon className="search-descending" sx={{ transform: sortByDescending ? "" : "rotate(-180deg)" }} />
                 </div>
