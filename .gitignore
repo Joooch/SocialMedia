@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /SocialMedia.API/Static/img/users/*
 /SocialMedia.API/Static/img/posts/*
+/SocialMedia.API/appsettings.Development.json

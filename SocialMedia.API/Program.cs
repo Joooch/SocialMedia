@@ -3,10 +3,12 @@ using SocialMedia.API.Extensions;
 using SocialMedia.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile($"appsettings.Development.json", optional: true);
+builder.Configuration.AddEnvironmentVariables();
+
 var config = builder.Configuration;
-
 var services = builder.Services;
-
 
 services
     .AddAPIServices(config)
