@@ -21,8 +21,6 @@ export default function ProfileHeader({ user, hideFriendsLabel }: { user?: User,
         }
     }, [user])
 
-    console.log("friend status:", friendStatus)
-
     const addFriend = async () => {
         await sendFriendRequest(user!.userId);
     }

@@ -56,7 +56,6 @@ export function AuthProvider({
                 })
                 .finally(() => {
                     setLoading(false)
-                    console.log(user)
                 });
         } else {
             setLoading(false)

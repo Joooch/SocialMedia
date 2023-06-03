@@ -25,14 +25,10 @@ namespace SocialMedia.Application.App.Posts.Queries
 
         public async Task<PaginatedResult<PostDto>> Handle(GetFeedQuery request, CancellationToken cancellationToken)
         {
-            /*var posts = await _postsRepository.GetPostsByUserId(request.UserId, new PagedRequest()
-            {
-                PageSize = 10
-            });*/
             var page = request.PageInfo ?? new PagedRequest() { PageSize = 10 };
             var posts = await _postsRepository.GetPostsByUserId(request.UserId, page);
 
-            return posts;//_mapper.Map<IList<PostDto>>(posts);
+            return posts;
         }
     }
 }
