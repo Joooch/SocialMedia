@@ -11,6 +11,10 @@ export function post<T = any>(path: string, data?: any, config?: AxiosRequestCon
     return axios.post<T>(backendURL + path, data, config)
 }
 
+export function del<T = any>(path: string, config?: AxiosRequestConfig | undefined) {
+    return axios.delete<T>(backendURL + path, config)
+}
+
 export function put<T = any>(path: string, data?: any, config?: AxiosRequestConfig | undefined) {
     return axios.put<T>(backendURL + path, data, config)
 }

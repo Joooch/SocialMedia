@@ -5,6 +5,7 @@ using SocialMedia.Application.App.Posts.Commands;
 using SocialMedia.Application.App.Posts.Queries;
 using SocialMedia.Application.App.Posts.Responses;
 using SocialMedia.Application.Common.Models;
+using System.ComponentModel;
 
 namespace SocialMedia.API.Controllers
 {
@@ -53,6 +54,43 @@ namespace SocialMedia.API.Controllers
                 UserId = HttpContext.User.GetUserId()
             });
             return uploadedImageDto;
+        }
+
+        // Likes
+        [HttpGet("{postId}/Like")]
+        public async Task<ActionResult> GetLikes(string postId)
+        {
+            var likes = await _mediator.Send(new GetLatestLikesQuery()
+            {
+                UserId = HttpContext.User.GetUserId(),
+                PostId = Guid.Parse(postId)
+            });
+
+            return Ok(likes);
+        }
+
+        [HttpPost("{postId}/Like")]
+        public async Task<ActionResult> Like(string postId)
+        {
+            var like = await _mediator.Send(new AddLikeCommand()
+            {
+                UserId = HttpContext.User.GetUserId(),
+                PostId = Guid.Parse(postId)
+            });
+
+            return Ok(like);
+        }
+
+        [HttpDelete("{postId}/Like")]
+        public async Task<ActionResult> UnLike(string postId)
+        {
+            var like = await _mediator.Send(new RemoveLikeCommand()
+            {
+                UserId = HttpContext.User.GetUserId(),
+                PostId = Guid.Parse(postId)
+            });
+
+            return Ok(like);
         }
     }
 }
