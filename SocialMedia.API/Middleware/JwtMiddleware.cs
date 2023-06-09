@@ -3,6 +3,7 @@ using SocialMedia.API.Extensions;
 using SocialMedia.Application.Common.Interfaces.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace SocialMedia.API.Middleware
 {
@@ -17,10 +18,19 @@ namespace SocialMedia.API.Middleware
 
         public async Task Invoke(HttpContext context, IUserRepository repository, AuthOptions authOptions)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
-            if (token != null)
+            var splitted = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ");
+            var token = splitted?.Last();
+            if (token is not null)
+            {
                 await attachAccountToContext(context, repository, authOptions, token);
+            }
+
+            
+            var wsToken = context.Request.Query.FirstOrDefault(q => q.Key == "token").Value.FirstOrDefault();
+            if (wsToken is not null)
+            {
+                await attachAccountToContext(context, repository, authOptions, wsToken);
+            }
 
             await _next(context);
         }
@@ -42,7 +52,7 @@ namespace SocialMedia.API.Middleware
                     var identity = new ClaimsIdentity(new List<Claim>()
                     {
                         new Claim(AuthOptions.ClientClaimId, userId)
-                    }, "basic");
+                    }, "Bearer");
                     context.User = new ClaimsPrincipal(identity);
                 }
             }

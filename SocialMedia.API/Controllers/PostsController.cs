@@ -5,7 +5,6 @@ using SocialMedia.Application.App.Posts.Commands;
 using SocialMedia.Application.App.Posts.Queries;
 using SocialMedia.Application.App.Posts.Responses;
 using SocialMedia.Application.Common.Models;
-using System.ComponentModel;
 
 namespace SocialMedia.API.Controllers
 {

@@ -9,13 +9,15 @@ import ProfileSetupPage from 'pages/ProfileSetup';
 import { CircularProgress, Container } from '@mui/material';
 import { Box } from '@mui/system';
 import FriendsPage from 'pages/FriendsPage';
+import ChatPage from 'pages/Chat';
 
 const Routes = () => {
   let routes = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/settings", element: <ProfileSetupPage /> },
     { path: "/profile/:id", element: <ProfilePage /> },
-    { path: "/profile/:id/friends", element: <FriendsPage /> }
+    { path: "/profile/:id/friends", element: <FriendsPage /> },
+    { path: "/chat", element: <ChatPage /> }
   ])
   return routes;
 }
