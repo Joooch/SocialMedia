@@ -1,12 +1,12 @@
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ShareIcon from '@mui/icons-material/Share';
 import { AvatarGroup, Card, CardActions, CardContent, CardHeader, Chip, Divider, IconButton, ImageList, ImageListItem } from '@mui/material';
 import { UserAvatar } from 'entities/user';
 import CommentsFeed from 'features/comments-feed/ui';
 import { useEffect, useState } from 'react';
 import { PostLikes, addLike, deleteLike, getLikes } from 'shared/api/post';
 import { Post } from 'shared/models';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShareIcon from '@mui/icons-material/Share';
 
 export function PostCard({ post }: { post: Post }) {
     const [likes, setLikes] = useState<PostLikes>({
@@ -48,11 +48,13 @@ export function PostCard({ post }: { post: Post }) {
                     post.images.length === 0 ?
                         <></>
                         :
-                        <ImageList sx={{ maxHeight: 450 }} cols={Math.min(post.images.length, 3)} gap={2} variant="standard">
+                        <ImageList sx={{ textAlign: "center" }} cols={Math.min(post.images.length, 3)} gap={3} variant="standard">
                             {
                                 post.images.map(id => {
                                     return (
-                                        <ImageListItem key={id}>
+                                        <ImageListItem key={id} sx={{
+                                            maxWidth: 1000
+                                        }}>
                                             <img src={"/img/posts/" + id + ".webp"} key={id} alt="" loading="lazy" />
                                         </ImageListItem>
                                     )

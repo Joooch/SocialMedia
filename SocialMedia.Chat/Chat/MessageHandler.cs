@@ -10,11 +10,8 @@ namespace SocialMedia.Chat.Chat
 {
     public class MessageHandler
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public MessageHandler(IServiceProvider serviceProvider)
+        public MessageHandler()
         {
-            _serviceProvider = serviceProvider;
         }
 
         private async Task<string?> ReadStringAsync(ChatClient client)
@@ -42,27 +39,30 @@ namespace SocialMedia.Chat.Chat
             }
         }
 
-        private async Task HandleCommand(ChatClient client, BaseCommand command)
+        private async Task HandleCommand(ChatClient client, BaseCommand command, IServiceProvider serviceProvider)
         {
             // todo: parse automatically
             if (command.Type == "SendMessage")
             {
-                var service = _serviceProvider.GetRequiredService<SendMessageCommandHandler>();
+                var service = serviceProvider.GetRequiredService<SendMessageCommandHandler>();
                 var payload = command.Payload;
-                await service.HandleCommand(client, payload.ToObject<SendMessageCommand>()!);
+                await service.HandleCommand(client, payload.ToObject<SendMessagePayload>()!);
             }
 
             return;
         }
 
-        public async Task Listen(ChatClient client)
+        public async Task Listen(ChatClient client, IServiceProvider serviceProvider)
         {
             while (client.Alive)
             {
                 var message = await ReadStringAsync(client);
-                Console.WriteLine(message);
-                var command = JsonConvert.DeserializeObject<BaseCommand>(message);
+                if (message is null)
+                {
+                    return;
+                }
 
+                var command = JsonConvert.DeserializeObject<BaseCommand>(message);
                 if (command is null)
                 {
                     break;
@@ -70,7 +70,7 @@ namespace SocialMedia.Chat.Chat
 
                 Console.WriteLine("Received command: %s", command.Type);
                 Console.WriteLine("Full message: %s", message);
-                await HandleCommand(client, command);
+                await HandleCommand(client, command, serviceProvider);
             }
 
             Console.WriteLine("done listening??");

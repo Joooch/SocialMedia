@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './app';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 import { AuthProvider } from "shared/api/session";
 
-import createTheme from "@mui/material/styles/createTheme";
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from '@mui/material/styles';
+import createTheme from "@mui/material/styles/createTheme";
 
 const darkTheme = createTheme({
   palette: {

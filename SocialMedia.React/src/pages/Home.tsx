@@ -19,26 +19,6 @@ function HomePage() {
         }
     }, [])
 
-    useEffect(() => {
-        console.log("test")
-        // var socket = new WebSocket("ws://javascript.ru/ws");
-        var socket = new WebSocket("ws://localhost:5042/WebSocket", cookies.Token);
-        socket.onopen = function(e){
-            console.log("on open")
-            this.send(JSON.stringify({"type": "test"}))
-        }
-        socket.onmessage = function(e){
-            console.log("message??")
-            console.log(e.data)
-        }
-        socket.onclose = function(e){
-            console.log("on close")
-        }
-        return () => {
-            socket.close();
-        }
-    }, [])
-
     return (
         <div className="Home">
             <h1 className='center-text'>Posts Feed</h1>

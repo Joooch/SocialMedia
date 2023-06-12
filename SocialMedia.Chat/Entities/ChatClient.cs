@@ -1,4 +1,6 @@
-﻿using System.Net.WebSockets;
+﻿using Newtonsoft.Json;
+using SocialMedia.Chat.Common.Interfaces;
+using System.Net.WebSockets;
 using System.Text;
 
 namespace SocialMedia.Chat.Entities
@@ -7,11 +9,13 @@ namespace SocialMedia.Chat.Entities
     {
         private readonly WebSocket _socket;
         private readonly CancellationToken _cancellationToken;
+        public Guid UserId { get; private set; }
 
-        public ChatClient(WebSocket socket, CancellationToken cancellationToken)
+        public ChatClient(WebSocket socket, Guid userId, CancellationToken cancellationToken)
         {
             _socket = socket;
             _cancellationToken = cancellationToken;
+            UserId = userId;
         }
 
         public bool Alive
@@ -27,6 +31,12 @@ namespace SocialMedia.Chat.Entities
             var buffer = Encoding.UTF8.GetBytes(data);
             var segment = new ArraySegment<byte>(buffer);
             return _socket.SendAsync(segment, WebSocketMessageType.Text, true, _cancellationToken);
+        }
+
+        public async Task SendCommandAsync(ICommand command)
+        {
+            var obj = JsonConvert.SerializeObject(command);
+            await SendStringAsync(obj);
         }
 
         public async Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer)

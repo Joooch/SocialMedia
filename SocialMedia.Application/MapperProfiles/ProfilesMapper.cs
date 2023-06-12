@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SocialMedia.Application.App.ChatMessages.Responses;
 using SocialMedia.Application.App.Comments.Responses;
 using SocialMedia.Application.App.Posts.Commands;
 using SocialMedia.Application.App.Posts.Responses;
@@ -26,6 +27,7 @@ namespace SocialMedia.Application.MapperProfiles
             CreateMap<Guid, string>().ConvertUsing(c => c.ToString());
 
             CreateMap<CommentEntity, CommentDto>();
+            CreateMap<ChatMessageEntity, ChatMessageDto>();
         }
     }
 }
