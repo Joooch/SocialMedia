@@ -1,12 +1,11 @@
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
-import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Stack } from '@mui/material';
-import { UserAvatar } from 'entities/user';
 import SendIcon from '@mui/icons-material/Send';
-import { profileUpdate, ProfileUpdateDto, profileUpdateImage } from 'shared/api/profile'
-import { CircularProgress, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Stack, TextField } from '@mui/material';
+import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { UserAvatar } from 'entities/user';
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from 'react-hook-form';
+import { ProfileUpdateDto, profileUpdate, profileUpdateImage } from 'shared/api/profile';
 import { UserFull } from 'shared/models';
 
 const maxDate = new Date()
@@ -81,7 +80,7 @@ export default function ProfileSettings(props: { profile?: UserFull, email: stri
             <Grid container spacing={3}>
                 <Grid item xs className='center-content center-text'>
                     <Stack>
-                        <UserAvatar user={profileImage ?? props.profile} size={128} />
+                        <UserAvatar user={profileImage ? undefined : props.profile} img={profileImage} size={128} />
                         <Button onClick={doUploadFile}>
                             Change
                         </Button>

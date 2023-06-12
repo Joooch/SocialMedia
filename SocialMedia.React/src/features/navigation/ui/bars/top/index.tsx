@@ -70,6 +70,19 @@ export function NavigationTopBar() {
                         </Typography>
                     </Button>
 
+                    <Button
+                        sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                        component={Link} to="/chat"
+                    >
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="div"
+                        >
+                            Chat
+                        </Typography>
+                    </Button>
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
