@@ -1,9 +1,6 @@
 using Microsoft.Extensions.FileProviders;
 using SocialMedia.API.Extensions;
 using SocialMedia.API.Middleware;
-using SocialMedia.Chat;
-using SocialMedia.Chat.Extensions;
-using System.Net.WebSockets;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
@@ -15,7 +12,6 @@ var services = builder.Services;
 
 services
     .AddAPIServices(config)
-    .AddChat()
     .AddControllers();
 
 services.AddCors(c =>
@@ -26,7 +22,6 @@ services.AddCors(c =>
 
 var app = builder.Build();
 
-app.UseWebSockets();
 app.UseCors(cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 if (app.Environment.IsDevelopment())
@@ -39,7 +34,8 @@ else
 {
     app.UseHsts();
 }
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
+
 
 var fileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Static/img"));
 app.UseStaticFiles(new StaticFileOptions

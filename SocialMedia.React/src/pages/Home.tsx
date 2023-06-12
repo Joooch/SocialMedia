@@ -1,7 +1,6 @@
 import { PostCreatorFake } from "features/post-creator";
 import PostsFeed from "features/posts-feed/ui";
-import { useCallback, useEffect, useRef } from "react";
-import { useCookies } from "react-cookie";
+import { useCallback, useRef } from "react";
 import { Post } from "shared/models";
 
 type appendPostFunction = {
@@ -10,7 +9,6 @@ type appendPostFunction = {
 
 function HomePage() {
 
-    const [cookies, setCookie, removeCookie] = useCookies(["Token"]);
     const appendPostToFeed = useRef<appendPostFunction>();
 
     const onPostCreated = useCallback((post: Post) => {

@@ -14,7 +14,6 @@ namespace SocialMedia.Infrastructure
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<ImageEntity> Images { get; set; }
         public DbSet<FriendsRequestEntity> FriendRequests { get; set; }
-        public DbSet<ChatMessageEntity> ChatMessages { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

@@ -12,7 +12,7 @@ namespace SocialMedia.Infrastructure.Extensions
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(config["DefaultConnection"], builder => builder.MigrationsAssembly("SocialMedia.API"));
+                options.UseSqlServer(config["DefaultConnection"]);
             });
 
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
@@ -22,7 +22,6 @@ namespace SocialMedia.Infrastructure.Extensions
             services.AddScoped(typeof(ILikesRepository), typeof(LikesRepository));
             services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
             services.AddScoped(typeof(IFriendsRepository), typeof(FriendsRepository));
-            services.AddScoped(typeof(IChatMessagesRepository), typeof(ChatMessagesRepository));
 
             return services;
         }

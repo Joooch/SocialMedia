@@ -1,4 +1,2 @@
-export * from "./chat"
-export * from "./profile"
-export * from "./session"
-
+export * from './session'
+export * from './profile'

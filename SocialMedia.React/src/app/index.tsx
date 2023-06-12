@@ -1,23 +1,21 @@
-import { CircularProgress, Container } from '@mui/material';
-import { Box } from '@mui/system';
-import { NavigationTopBar } from 'features/navigation/ui/bars/top';
-import ChatPage from 'pages/Chat';
-import FriendsPage from 'pages/FriendsPage';
+import './styles/index.css';
+import { BrowserRouter, useRoutes } from 'react-router-dom';
 import HomePage from 'pages/Home';
 import LoginPage from 'pages/Login';
 import ProfilePage from 'pages/Profile';
-import ProfileSetupPage from 'pages/ProfileSetup';
-import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { NavigationTopBar } from 'features/navigation/ui/bars/top';
 import { useAuth } from 'shared/api/session';
-import './styles/index.css';
+import ProfileSetupPage from 'pages/ProfileSetup';
+import { CircularProgress, Container } from '@mui/material';
+import { Box } from '@mui/system';
+import FriendsPage from 'pages/FriendsPage';
 
 const Routes = () => {
   let routes = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/settings", element: <ProfileSetupPage /> },
     { path: "/profile/:id", element: <ProfilePage /> },
-    { path: "/profile/:id/friends", element: <FriendsPage /> },
-    { path: "/chat", element: <ChatPage /> }
+    { path: "/profile/:id/friends", element: <FriendsPage /> }
   ])
   return routes;
 }
@@ -25,7 +23,7 @@ const Routes = () => {
 function PageLayout() {
   return (
     <div className="center-content">
-      <Container maxWidth="xl">
+      <Container maxWidth="md">
         <Routes />
       </Container>
     </div>
