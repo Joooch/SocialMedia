@@ -78,7 +78,7 @@ export default function ChatMessagesView({ targetId }: { targetId: string }) {
 						>
 							<Box
 								className={
-									user?.userId === message.ownerId
+									user?.userId === message.ownerId.toUpperCase()
 										? `${s.message} ${s.right}`
 										: s.message
 								}
