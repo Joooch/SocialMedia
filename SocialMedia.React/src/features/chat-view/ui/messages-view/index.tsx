@@ -29,24 +29,32 @@ export default function ChatMessagesView({ targetId }: { targetId: string }) {
 		}
 
 		const eventId = chat.on("message", (message: IChatMessage) => {
+			message.targetId = message.targetId.toUpperCase( )
+			message.ownerId = message.ownerId.toUpperCase( )
+			
+			if(targetId !== message.ownerId && targetId !== message.targetId){
+				return;
+			}
 			setMessages([...messagesRef.current, message as IChatMessage])
 			scrollToBottom()
 		})
 		return () => {
 			chat.removeEventListener("messaage", eventId)
 		}
-	}, [chat])
+	}, [chat, targetId])
 
 	useEffect(() => {
 		getLastMessages(targetId).then((data) => {
 			setMessages(data.items.reverse())
 			scrollToBottom()
 		})
-	}, [])
+	}, [targetId])
 
 	const sendMessage = () => {
 		const message = messageInputRef.current!.value
 		chat?.sendMessage(targetId, message)
+
+		messageInputRef.current!.value = ""
 	}
 	return (
 		<div className={s.messages}>

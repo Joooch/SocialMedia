@@ -10,9 +10,11 @@
     display: flex;
     background-color: #182533;
     
-    width: 75%;
+    max-width: 75%;
+    min-width: 150px;
     padding: 5px 10px;
     border-radius: 20px 20px 20px 0px;
+    align-self: flex-start;
 }
 
 .messagebox .message.right {

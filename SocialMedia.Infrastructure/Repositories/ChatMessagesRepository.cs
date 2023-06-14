@@ -22,7 +22,7 @@ namespace SocialMedia.Infrastructure.Repositories
         public async Task<PaginatedResult<ChatMessageDto>> GetByUserId(Guid userId, Guid targetId, PagedRequest pagedRequest)
         {
             return await EntitySet
-                .Where(c => c.TargetId == userId || c.OwnerId == userId || c.TargetId == targetId || c.OwnerId == targetId)
+                .Where(c => (c.TargetId == userId && c.OwnerId == targetId) || (c.TargetId == targetId && c.OwnerId == userId))
                 .ApplyPaginatedResultAsync<ChatMessageEntity, ChatMessageDto>(pagedRequest, _mapper);
         }
 

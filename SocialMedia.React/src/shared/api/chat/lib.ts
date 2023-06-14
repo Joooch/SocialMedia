@@ -4,6 +4,7 @@ import * as api from "../apiRequest"
 export interface IChatMessage {
 	id: string
 	ownerId: string
+	targetId: string
 	content: string
 }
 

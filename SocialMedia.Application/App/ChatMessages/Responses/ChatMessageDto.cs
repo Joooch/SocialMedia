@@ -10,5 +10,6 @@ namespace SocialMedia.Application.App.ChatMessages.Responses
         public DateTime CreatedAt { get; set; }
 
         public Guid OwnerId { get; set; }
+        public Guid TargetId { get; set; }
     }
 }
