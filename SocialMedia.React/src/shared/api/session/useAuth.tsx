@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
     createContext,
     ReactNode,
@@ -7,10 +8,9 @@ import {
     useMemo,
     useState,
 } from "react";
-import { getCurrentUser, getTokenByGoogle } from "./lib";
-import axios from "axios";
 import { useCookies } from 'react-cookie';
 import { UserFull } from "shared/models";
+import { getCurrentUser, getTokenByGoogle } from "./lib";
 
 interface AuthContextType {
     user?: UserFull;
@@ -41,12 +41,14 @@ export function AuthProvider({
         if (jwtToken) {
             setLoading(true)
             axios.defaults.headers.common['Authorization'] = jwtToken;
-
             getCurrentUser()
                 .then((res) => {
                     if (!res?.email) {
                         setLogged(undefined);
                         throw new Error("Invalid user");
+                    }
+                    if(res.profile){
+                        res.profile.userId = res.profile.userId.toUpperCase( )
                     }
                     setUser(res.profile);
                     setLogged(res.email);
